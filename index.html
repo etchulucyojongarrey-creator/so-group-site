@@ -1,0 +1,3099 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>SO GROUP — B2B Marketplace (Complete)</title>
+  <meta name="description" content="SO GROUP — Global B2B marketplace: suppliers, RFQ, verified sellers, education, trade assurance, multi-currency, and social login." />
+  <meta name="theme-color" content="#0a66c2" />
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Inline global styles -->
+  <style>
+    :root{
+      --accent: #0a66c2;
+      --accent-2: #2b90ff;
+      --bg: #f6f8fb;
+      --card-bg: #fff;
+      --muted: #6b7280;
+      --radius: 12px;
+      --gap: 14px;
+      --max-image-size: 524288;
+      --danger: #ff3b30;
+      --success: #16a34a;
+      --warning: #f59e0b;
+    }
+    /* Reset & base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      background:var(--bg);color:#111;-webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    button{font-family:inherit;cursor:pointer}
+    input,textarea,select{font-family:inherit}
+    /* Header */
+    .header{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:white;padding:10px 0;position:sticky;top:0;z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,.08)
+    }
+    .wrap{max-width:1280px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px}
+    .logo{font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:10px}
+    .logo .mark{font-size:20px}
+    .searchbar{flex:1;display:flex;gap:8px;align-items:center}
+    .searchbar input[type="text"]{flex:1;padding:10px;border-radius:10px;border:0;outline:none}
+    .select,.btn{padding:8px 12px;border-radius:10px;border:0}
+    .btn{background:#fff;color:var(--accent);border:0}
+    .btn-primary{background:#ff6b35;color:white}
+    .btn-ghost{background:transparent;color:white;border:1px solid rgba(255,255,255,.18)}
+    .header-right{display:flex;gap:8px;align-items:center}
+    .flag{width:26px;height:18px;border-radius:3px;overflow:hidden;background:#ddd;display:inline-block;background-size:cover;background-position:center}
+    .small{font-size:13px;color:var(--muted)}
+    /* layout */
+    .container{max-width:1280px;margin:18px auto;padding:0 16px;display:grid;grid-template-columns:300px 1fr;gap:18px}
+    .sidebar{background:var(--card-bg);border-radius:var(--radius);padding:14px;box-shadow:0 6px 20px rgba(20,30,50,.04)}
+    .main{background:var(--card-bg);border-radius:var(--radius);padding:14px;box-shadow:0 6px 20px rgba(20,30,50,.04)}
+    /* hero & cards */
+    .hero{display:flex;flex-direction:row;gap:14px;align-items:center;padding:18px;border-radius:10px;background:linear-gradient(135deg,#eef7ff,#f9fbff);margin-bottom:12px}
+    .cat-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+    .cat-item{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;cursor:pointer}
+    .cat-item:hover{background:#f3f7ff}
+    .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+    .card{background:var(--card-bg);border-radius:10px;padding:10px;border:1px solid #f0f2f5;display:flex;flex-direction:column}
+    .thumb{height:160px;border-radius:8px;overflow:hidden;background:#fafafa;display:flex;align-items:center;justify-content:center}
+    .card img{width:100%;height:100%;object-fit:cover;display:block}
+    .title{font-weight:700;margin-top:8px}
+    .meta{font-size:13px;color:var(--muted);margin-top:6px}
+    .price{color:var(--accent);font-weight:800;margin-top:6px}
+    /* badges and levels */
+    .level-badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px}
+    .level-new{background:var(--danger);color:white}
+    .level-verified{background:var(--success);color:white}
+    .level-gold{background:var(--warning);color:white}
+    /* modal & panels */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:4000;padding:16px}
+    .modal.active{display:flex}
+    .panel{background:white;border-radius:12px;padding:18px;width:100%;max-width:980px;max-height:90vh;overflow:auto;box-shadow:0 20px 80px rgba(0,0,0,.3)}
+    .seller-box{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:10px;border:1px solid #f0f2f5;background:#fafafa}
+    .seller-box .logo{width:84px;height:84px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;border:1px solid #eee;overflow:hidden}
+    .recommended-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .recommended-item{width:140px;background:#fff;border-radius:8px;padding:8px;border:1px solid #f0f2f5}
+    .recommended-item img{width:100%;height:80px;object-fit:cover;border-radius:6px}
+    /* footer */
+    .footer{background:#0f1724;color:#c7d2fe;padding:28px 16px;margin-top:18px}
+    .footer .grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;align-items:start}
+    .muted{color:var(--muted)}
+    .star{color:#f59e0b}
+    /* responsive */
+    @media(max-width:980px){
+      .container{grid-template-columns:1fr;padding:12px}
+      .hero{flex-direction:column}
+      .header .wrap{flex-wrap:wrap}
+      .logo{font-size:1rem}
+      .sidebar{order:2}
+      .main{order:1}
+    }
+    /* dark mode (toggleable) */
+    .dark body{ --bg: #0b1220; --card-bg: #0f1724; color: #e6eef8; }
+    /* utility */
+    .flex{display:flex} .gap8{gap:8px}
+    input,textarea,select{padding:8px;border-radius:8px;border:1px solid #e6eefb;outline:none;font-size:14px;width:100%}
+    /* focus */
+    button:focus, input:focus, textarea:focus, select:focus{ box-shadow:0 0 0 3px rgba(11,102,194,0.12); outline:none }
+  </style>
+
+  <!-- small inline script to avoid FOIT for icons/themes -->
+  <script>
+    // Default small helpers available early
+    (function(){
+      // preserve user's theme if previously chosen
+      try{
+        const t = localStorage.getItem('so_theme');
+        if(t === 'dark') document.documentElement.classList.add('dark');
+      }catch(e){}
+      // small polyfill for replaceAll if needed
+      if(!String.prototype.replaceAll){ String.prototype.replaceAll = function(a,b){ return this.split(a).join(b); }; }
+    })();
+  </script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header" role="banner" aria-label="Main header">
+    <div class="wrap">
+      <div class="logo" aria-hidden="false"><span class="mark">🌐</span><span>SO GROUP</span></div>
+
+      <!-- SEARCH -->
+      <div class="searchbar" role="search">
+        <input id="searchInput" type="text" placeholder="Search products, suppliers, categories (e.g., 'smartphone', 'books')" aria-label="Search" />
+        <select id="categorySelect" class="select" title="Category" aria-label="Category select">
+          <option value="">All Categories</option>
+        </select>
+        <select id="langSelect" class="select" title="Language" aria-label="Language select">
+          <option value="en">EN</option><option value="fr">FR</option><option value="es">ES</option><option value="zh">中文</option>
+        </select>
+        <button id="searchBtn" class="btn btn-primary" aria-label="Search button">Search</button>
+      </div>
+
+      <!-- RIGHT ACTIONS -->
+      <div class="header-right" role="navigation" aria-label="Header actions">
+        <div id="locBox" style="display:flex;align-items:center;gap:8px">
+          <div id="countryFlag" class="flag" aria-hidden="true" style="display:none"></div>
+          <div id="locText" class="small" style="color:white">Detecting...</div>
+        </div>
+
+        <select id="currencySelect" class="select" title="Currency" aria-label="Currency selector">
+          <option>USD</option><option>EUR</option><option>XAF</option><option>NGN</option><option>KES</option><option>CNY</option><option>GBP</option><option>INR</option>
+        </select>
+
+        <div id="notifyBell" style="position:relative" title="Notifications">
+          <button class="btn btn-ghost" id="btnNotifications" aria-label="Notifications">🔔</button>
+          <div id="notifCount" style="position:absolute;right:4px;top:2px;background:var(--danger);color:white;border-radius:999px;padding:2px 6px;font-size:12px;display:none">0</div>
+        </div>
+
+        <!-- Theme toggle -->
+        <button id="btnTheme" class="btn" title="Toggle theme" aria-label="Toggle theme">🌓</button>
+
+        <!-- Auth area populated by JS -->
+        <div id="authArea" style="display:flex;align-items:center;gap:6px"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Begin main layout (sidebar + main area) -->
+  <main class="container" aria-live="polite">
+    <!-- Left sidebar will be in Part 2 -->
+<!-- ===== Part 2: Sidebar (categories, quick actions), Hero, Featured header, Product grid container ===== -->
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" aria-label="Categories and quick actions">
+      <h3>Categories</h3>
+      <div class="cat-list" id="categoryList">
+        <!-- injected by JS -->
+      </div>
+
+      <hr style="margin:12px 0">
+
+      <button id="btnDashboard" class="btn btn-ghost" style="width:100%;margin-bottom:8px">Dashboard</button>
+      <button id="startSourcingBtn" class="btn btn-primary" style="width:100%">Start Sourcing Now</button>
+
+      <div style="margin-top:10px;font-size:13px;color:var(--muted)">
+        Tip: Save products to Wishlist, send RFQs from product pages, or post an Alibaba-style ad. Click "Start Sourcing Now" to begin — login required.
+      </div>
+
+      <hr style="margin:12px 0">
+
+      <h4 style="margin-bottom:8px">Top Filters</h4>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <select id="filterCountry" class="select" aria-label="Filter by country">
+          <option value="">All Countries</option>
+          <option value="CN">China</option><option value="US">United States</option><option value="FR">France</option><option value="DE">Germany</option><option value="CM">Cameroon</option><option value="NG">Nigeria</option>
+        </select>
+        <select id="filterVerified" class="select" aria-label="Verified suppliers filter">
+          <option value="">All Suppliers</option>
+          <option value="1">Verified only</option>
+        </select>
+        <div style="display:flex;gap:8px">
+          <input id="minPrice" placeholder="Min price" type="number" aria-label="Minimum price" />
+          <input id="maxPrice" placeholder="Max price" type="number" aria-label="Maximum price" />
+        </div>
+        <button id="applyFilters" class="btn">Apply Filters</button>
+      </div>
+
+      <hr style="margin:12px 0">
+
+      <h4>Quick Visual Search</h4>
+      <div id="colorSearchBar" style="display:flex;gap:6px;margin-top:6px">
+        <!-- color buttons added by JS -->
+      </div>
+
+      <hr style="margin:12px 0">
+
+      <h4>Resources</h4>
+      <ul style="list-style:none;padding:0;margin:0;line-height:1.6">
+        <li><a href="#guides" class="small footer-link">📘 How-to guides</a></li>
+        <li><a href="#courses" class="small footer-link">🎓 Courses</a></li>
+        <li><a href="#books" class="small footer-link">📚 Books & eLearning</a></li>
+      </ul>
+    </aside>
+
+    <!-- RIGHT MAIN COLUMN -->
+    <section class="main" id="mainSection" aria-label="Main content">
+      <!-- HERO -->
+      <div class="hero" role="region" aria-label="Hero">
+        <div class="left">
+          <h2 id="heroTitle">Welcome to SO GROUP B2B Marketplace</h2>
+          <p id="heroText">Connect with verified global suppliers and buyers. Browse products, read trade guides, and access learning resources.</p>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button id="btnPostAdTop" class="btn btn-primary">Post Ad</button>
+            <button id="btnBrowseEdu" class="btn">Education & Books</button>
+            <button id="btnSavedSearches" class="btn">Saved Searches</button>
+          </div>
+        </div>
+
+        <div class="right">
+          <img src="https://picsum.photos/seed/marketplace3/420/280" alt="Marketplace illustration" style="border-radius:12px;width:100%;height:auto">
+        </div>
+      </div>
+
+      <!-- FEATURED PRODUCTS HEADER -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <h3 style="margin:0">Featured Products</h3>
+          <div class="small muted">Click View to see full product & supplier details. Use Request Quote in the product panel for bulk pricing.</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="btnLoadMore" class="btn">Load More</button>
+          <button id="btnShowWishlist" class="btn">Wishlist</button>
+        </div>
+      </div>
+
+      <!-- PRODUCT GRID -->
+      <div class="product-grid" id="productGrid" aria-live="polite">
+        <!-- products injected by JS -->
+      </div>
+
+      <!-- Education & Articles (in Part 3) -->
+<!-- ===== Part 3: Education, Articles/News, RFQ Marketplace link, Events ===== -->
+
+      <!-- EDUCATION SECTION -->
+      <div style="margin-top:20px">
+        <h3>Education & Knowledge Hub</h3>
+        <div class="small muted">Grow your trading skills with courses, certifications, and eLearning resources.</div>
+        <div class="product-grid" id="eduGrid">
+          <div class="card">
+            <div class="thumb"><img src="https://picsum.photos/seed/book/300/200" alt="Books"></div>
+            <div class="title">📚 Books & eLearning</div>
+            <div class="meta">Digital guides and textbooks for trade & business.</div>
+            <div class="price">From $9.99</div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img src="https://picsum.photos/seed/course/300/200" alt="Courses"></div>
+            <div class="title">🎓 Courses & Certifications</div>
+            <div class="meta">Learn ISO standards, logistics, exports, certifications.</div>
+            <div class="price">From $49</div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img src="https://picsum.photos/seed/guide/300/200" alt="Guides"></div>
+            <div class="title">📘 How-to Guides</div>
+            <div class="meta">Step-by-step trading, exporting, importing tutorials.</div>
+            <div class="price">Free</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTICLES / BLOG -->
+      <div style="margin-top:24px">
+        <h3>News & Insights</h3>
+        <div class="small muted">Latest market updates, case studies, and success stories from global trade.</div>
+        <div class="product-grid" id="newsGrid">
+          <div class="card">
+            <div class="thumb"><img src="https://picsum.photos/seed/news1/300/200" alt="Trends"></div>
+            <div class="title">🌍 2025 Export Market Trends</div>
+            <div class="meta">Explore top destinations for African SMEs in 2025.</div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img src="https://picsum.photos/seed/news2/300/200" alt="Case study"></div>
+            <div class="title">🚀 Coffee SME Success</div>
+            <div class="meta">How a startup reached EU buyers via SO GROUP.</div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img src="https://picsum.photos/seed/news3/300/200" alt="Logistics"></div>
+            <div class="title">📦 Shipping Explained</div>
+            <div class="meta">FOB, CIF, and DDP simplified for first-time exporters.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RFQ MARKETPLACE -->
+      <div style="margin-top:24px">
+        <h3>Buyer Requests (RFQ Marketplace)</h3>
+        <div class="small muted">See what buyers are sourcing now. Suppliers can respond to posted RFQs.</div>
+        <div id="rfqList" class="product-grid">
+          <!-- buyer RFQs injected dynamically -->
+        </div>
+        <div style="margin-top:10px"><button id="btnViewAllRFQ" class="btn">View All RFQs</button></div>
+      </div>
+
+      <!-- EVENTS -->
+      <div style="margin-top:24px">
+        <h3>Events & Webinars</h3>
+        <div class="small muted">Join live training and trade fairs hosted by SO GROUP.</div>
+        <div class="product-grid">
+          <div class="card">
+            <div class="thumb"><img src="https://picsum.photos/seed/event1/300/200" alt="Webinar"></div>
+            <div class="title">🌐 Export Readiness Webinar</div>
+            <div class="meta">Live session on compliance and documentation.</div>
+            <div class="price">Free — 25 Sept 2025</div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img src="https://picsum.photos/seed/event2/300/200" alt="Trade Fair"></div>
+            <div class="title">🏭 Industrial Expo</div>
+            <div class="meta">Meet machinery suppliers & buyers in one space.</div>
+            <div class="price">Oct 2025</div>
+          </div>
+        </div>
+      </div>
+    </section> <!-- end main -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="grid">
+      <div>
+        <h4>About SO GROUP</h4>
+        <p>SO GROUP is a trusted B2B marketplace connecting buyers and suppliers worldwide. 
+        Our mission is to make trade safe, fast, and reliable.</p>
+      </div>
+      <div>
+        <h4>For Buyers</h4>
+        <ul style="list-style:none;padding:0;line-height:1.6">
+          <li><a href="#categories">🔍 Browse categories</a></li>
+          <li><a href="#chat">💬 Chat with suppliers</a></li>
+          <li><a href="#assurance">🛡️ Trade assurance</a></li>
+          <li><a href="#shipping">📦 Flexible shipping</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Education</h4>
+        <ul style="list-style:none;padding:0;line-height:1.6">
+          <li><a href="#books">📚 Books & eLearning</a></li>
+          <li><a href="#courses">🎓 Courses & Certifications</a></li>
+          <li><a href="#guides">📘 How-to guides</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul style="list-style:none;padding:0;line-height:1.6">
+          <li><a href="#termsModal" id="openTerms">📄 Terms</a></li>
+          <li><a href="#privacyModal" id="openPrivacy">🔐 Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Modals and forms begin in Part 4 ===== -->
+<!-- ===== Part 4: Modals (Login/Register, Post Ad, Product details, Terms, Privacy, Notifications) ===== -->
+
+  <!-- LOGIN / REGISTER MODAL -->
+  <div id="authModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="panel" style="max-width:480px">
+      <h3 id="authTitle">Login or Create Account</h3>
+      <p class="small muted">Access posting ads, RFQ, and dashboard. You can continue with email or social accounts.</p>
+
+      <div id="authTabs" style="display:flex;gap:8px;margin-bottom:10px">
+        <button id="tabLogin" class="btn btn-primary">Login</button>
+        <button id="tabRegister" class="btn">Register</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email address" />
+        <input type="password" id="loginPass" placeholder="Password" />
+        <button id="btnLoginEmail" class="btn btn-primary" style="margin-top:10px;width:100%">Login with Email</button>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="registerForm" style="display:none">
+        <input type="email" id="regEmail" placeholder="Email address" />
+        <input type="password" id="regPass" placeholder="Password (min 6 chars)" />
+        <button id="btnRegisterEmail" class="btn btn-primary" style="margin-top:10px;width:100%">Create Account</button>
+      </div>
+
+      <div style="margin:12px 0;text-align:center;font-size:13px;color:var(--muted)">OR</div>
+
+      <!-- SOCIAL LOGIN OPTIONS -->
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button id="btnGoogle" class="btn" style="background:#db4437;color:white"><i class="fab fa-google"></i> Continue with Google</button>
+        <button id="btnYahoo" class="btn" style="background:#720e9e;color:white"><i class="fab fa-yahoo"></i> Continue with Yahoo</button>
+        <button id="btnFacebook" class="btn" style="background:#1877f2;color:white"><i class="fab fa-facebook"></i> Continue with Facebook</button>
+        <button id="btnLinkedIn" class="btn" style="background:#0a66c2;color:white"><i class="fab fa-linkedin"></i> Continue with LinkedIn</button>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:14px">
+        <button class="btn" onclick="closeModal('authModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST AD MODAL -->
+  <div id="postAdModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="postAdTitle">
+    <div class="panel">
+      <h3 id="postAdTitle">Post an Ad (Alibaba style)</h3>
+      <form id="postAdForm">
+        <div id="postAdFields"></div>
+        <div style="margin-top:10px;display:flex;justify-content:flex-end;gap:8px">
+          <button type="button" class="btn" onclick="closeModal('postAdModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Ad</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAILS MODAL -->
+  <div id="productModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="productTitle">
+    <div class="panel" id="modalContent">
+      <!-- filled dynamically by JS -->
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS PANEL -->
+  <div id="notifModal" class="modal">
+    <div class="panel" style="max-width:480px">
+      <h3>Notifications</h3>
+      <div id="notifList"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:14px">
+        <button class="btn" onclick="closeModal('notifModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMS MODAL -->
+  <div id="termsModal" class="modal">
+    <div class="panel">
+      <h3>Terms & Conditions</h3>
+      <p>By using SO GROUP Marketplace, you agree to follow our rules:</p>
+      <ul>
+        <li>No posting counterfeit, illegal, or restricted goods.</li>
+        <li>All suppliers must provide accurate company & contact details.</li>
+        <li>Buyers should use Trade Assurance for safe transactions.</li>
+        <li>Disputes are subject to mediation under SO GROUP rules.</li>
+      </ul>
+      <div style="margin-top:12px;display:flex;justify-content:flex-end">
+        <button class="btn" onclick="closeModal('termsModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIVACY MODAL -->
+  <div id="privacyModal" class="modal">
+    <div class="panel">
+      <h3>Privacy Policy</h3>
+      <p>We respect your privacy. Key points:</p>
+      <ul>
+        <li>Your data (email, profile, posted ads) is stored securely in Firebase.</li>
+        <li>We do not sell personal information to third parties.</li>
+        <li>We use cookies to remember your preferences and improve services.</li>
+        <li>You may request data deletion at any time via account settings.</li>
+      </ul>
+      <div style="margin-top:12px;display:flex;justify-content:flex-end">
+        <button class="btn" onclick="closeModal('privacyModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD MODAL -->
+  <div id="dashboardModal" class="modal">
+    <div class="panel">
+      <h3>Dashboard</h3>
+      <div id="dashboardContent">
+        <!-- Filled dynamically with user stats, posted ads, RFQs -->
+      </div>
+      <div style="margin-top:12px;display:flex;justify-content:flex-end">
+        <button class="btn" onclick="closeModal('dashboardModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Scripts and logic begin in Part 5 ===== -->
+<!-- ===== Part 5: Core JS — categories, sample products (levels), rendering, modals, auth-checks, social login hooks ===== -->
+<script type="module">
+/* Main client logic for SO GROUP (Part 5)
+   - Builds categories & product data (with supplier levels)
+   - Renders product grid with badges (New / Verified / Gold)
+   - Handles opening product modal, RFQ button placement
+   - Enforces auth check for Post Ad / Start Sourcing
+   - Social login buttons wired to Firebase providers if available (graceful fallback in demo)
+*/
+
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, OAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// --- Local category dataset (exposed globally) ---
+const FULL_CATEGORIES = {
+  "Electronics":["Smartphones","Laptops","Tablets","Accessories","Wearables","Cameras","Audio"],
+  "Fashion & Apparel":["Men","Women","Kids","Shoes","Bags","Jewelry","Textiles"],
+  "Home & Garden":["Furniture","Kitchen","Decor","Lighting","Garden Tools","Bedding"],
+  "Industrial Equipment":["Machinery","Tools","Parts","Safety Equipment","Generators","Compressors"],
+  "Automotive":["Cars","Motorcycles","Auto Parts","Tires","Accessories","EV Components"],
+  "Health & Beauty":["Skincare","Haircare","Cosmetics","Medical Supplies","Wellness","Personal Care"],
+  "Books & Education":["Textbooks","eBooks","Courses","Teaching Aids","Workbooks","Academic"],
+  "Food & Beverages":["Beverages","Snacks","Fresh Food","Staples","Frozen Foods","Organic"],
+  "Construction Materials":["Cement","Steel","Paints","Plumbing","Tiles","Wood"],
+  "Chemicals":["Industrial Chemicals","Fertilizers","Cleaning Products","Pharmaceutical Precursors"]
+};
+window.FULL_CATEGORIES = FULL_CATEGORIES;
+
+// --- Sample sellers with levels ---
+const SELLERS = [
+  { id:'s1', name:'Global Tech Ltd.', company:'Global Tech Ltd.', country:'US', phone:'+1 555 123456', whatsapp:'+1555123456', email:'sales@globaltech.com', address:'123 Silicon Ave, CA', level:'verified' },
+  { id:'s2', name:'Paris Fashion Hub', company:'Paris Fashion Hub', country:'FR', phone:'+33 1 23456789', whatsapp:'+33698765432', email:'contact@parisfashion.com', address:'45 Rue Saint-Honoré, Paris', level:'gold' },
+  { id:'s3', name:'Shanghai Heavy Duty', company:'Shanghai Heavy Duty Ltd.', country:'CN', phone:'+86 21 556677', whatsapp:'+8613844556677', email:'sales@shd-machinery.cn', address:'88 Industry Park, Shanghai', level:'free' },
+  { id:'s4', name:'Seoul Beauty', company:'Seoul Beauty Co.', country:'KR', phone:'+82 2 987654', whatsapp:'+821012345678', email:'support@seoulbeauty.kr', address:'Gangnam St, Seoul', level:'verified' },
+  { id:'s5', name:'Lagos Supplies', company:'Lagos Supplies Ltd.', country:'NG', phone:'+2348030000000', whatsapp:'+2348030000000', email:'info@lagossupplies.ng', address:'Ikeja, Lagos', level:'free' }
+];
+
+// --- Generate sample products (with createdAt for "new" badge) ---
+function generateSampleProducts(count=120, start=1){
+  const cats = Object.keys(FULL_CATEGORIES);
+  const products = [];
+  for(let i=0;i<count;i++){
+    const idx = start + i;
+    const cat = cats[idx % cats.length];
+    const sub = FULL_CATEGORIES[cat][idx % FULL_CATEGORIES[cat].length];
+    const seller = SELLERS[idx % SELLERS.length];
+    // set createdAt so some are "new" (within last 7 days)
+    const daysAgo = Math.floor(Math.random()*60); // some new, some older
+    const createdAt = Date.now() - (daysAgo * 24*60*60*1000);
+    products.push({
+      id: `prod_${idx}`,
+      title: `${sub} Model ${idx}`,
+      category: cat,
+      subcategory: sub,
+      price: Number((Math.random()*900 + 10).toFixed(2)),
+      currency: 'USD',
+      sellerId: seller.id,
+      seller: seller.name,
+      company: seller.company,
+      delivery: (Math.random()<0.5) ? 'International Export' : 'Local Delivery',
+      contact: { address: seller.address, phone: seller.phone, whatsapp: seller.whatsapp, email: seller.email },
+      image: `https://picsum.photos/seed/${encodeURIComponent(cat+'-'+sub+'-'+idx)}/640/480`,
+      dominantColor: ['red','blue','green','gray'][idx % 4],
+      verified: seller.level === 'verified' || seller.level === 'gold',
+      level: seller.level, // free | verified | gold
+      rating: Math.round(Math.random()*4)+1,
+      createdAt
+    });
+  }
+  return products;
+}
+window.__SO_PRODUCTS = generateSampleProducts(160,1);
+
+// --- DOM nodes ---
+const categorySelect = document.getElementById('categorySelect');
+const categoryList = document.getElementById('categoryList');
+const productGrid = document.getElementById('productGrid');
+const colorSearchBar = document.getElementById('colorSearchBar');
+const btnPostAdTop = document.getElementById('btnPostAdTop');
+const startSourcingBtn = document.getElementById('startSourcingBtn');
+const authArea = document.getElementById('authArea');
+const btnNotifications = document.getElementById('btnNotifications');
+const notifCount = document.getElementById('notifCount');
+const currencySelect = document.getElementById('currencySelect');
+const searchBtn = document.getElementById('searchBtn');
+const searchInput = document.getElementById('searchInput');
+
+// --- Utility helpers ---
+function esc(s){ return s ? String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') : ''; }
+function daysBetween(ts){ return Math.floor((Date.now() - ts) / (24*60*60*1000)); }
+
+// --- Build categories UI & select ---
+function buildCategories(){
+  categorySelect.innerHTML = '<option value="">All Categories</option>';
+  categoryList.innerHTML = '';
+  Object.entries(FULL_CATEGORIES).forEach(([cat,subs])=>{
+    const opt = document.createElement('option'); opt.value = cat; opt.textContent = cat; categorySelect.appendChild(opt);
+    const block = document.createElement('div'); block.className = 'cat-block';
+    const title = document.createElement('div'); title.style.fontWeight='700'; title.style.marginTop='4px'; title.textContent = cat;
+    block.appendChild(title);
+    subs.forEach(sub=>{
+      const el = document.createElement('div'); el.className='cat-item'; el.style.paddingLeft='6px'; el.textContent = '• '+sub;
+      el.onclick = ()=>{ searchInput.value = sub; doSearch(); };
+      block.appendChild(el);
+    });
+    categoryList.appendChild(block);
+  });
+
+  // color quick search
+  colorSearchBar.innerHTML = '';
+  ['red','blue','green','gray'].forEach(c=>{
+    const btn = document.createElement('button'); btn.className = 'btn'; btn.style.background = c; btn.style.color='white'; btn.textContent = c;
+    btn.onclick = ()=> { renderGrid(window.__SO_PRODUCTS.filter(p=>p.dominantColor===c)); };
+    colorSearchBar.appendChild(btn);
+  });
+}
+buildCategories();
+
+// --- Notifications (simple) ---
+const NOTIFICATIONS = [];
+function addNotification(msg){ NOTIFICATIONS.unshift({id:'n'+Date.now(), msg, ts:Date.now(), read:false}); updateNotifUI(); }
+function updateNotifUI(){ const unread = NOTIFICATIONS.filter(n=>!n.read).length; notifCount.style.display = unread ? 'inline-block' : 'none'; notifCount.textContent = unread; const list = document.getElementById('notifList'); if(list){ list.innerHTML=''; NOTIFICATIONS.forEach(n=>{ const el = document.createElement('div'); el.style.padding='8px'; el.innerHTML = `<div style="font-weight:700">${esc(n.msg)}</div><div class="small muted">${new Date(n.ts).toLocaleString()}</div>`; list.appendChild(el); }); } }
+btnNotifications.addEventListener('click', ()=> { openModal('notifModal'); updateNotifUI(); });
+
+// --- Render product cards with level badges and new alerts ---
+function renderGrid(list){
+  const arr = list !== undefined ? list : window.__SO_PRODUCTS.slice(0,40);
+  productGrid.innerHTML = '';
+  const selectedCurrency = currencySelect.value || 'USD';
+  arr.forEach(p=>{
+    const newDays = daysBetween(p.createdAt);
+    const isNew = newDays <= 7; // new within 7 days
+    const levelBadge = p.level === 'gold' ? '<span class="level-badge level-gold">Gold</span>' : (p.level === 'verified' ? '<span class="level-badge level-verified">Verified</span>' : '<span class="level-badge" style="background:#eee;color:#444">Free</span>');
+    const newBadge = isNew ? '<span class="level-badge level-new" title="New listing">NEW</span>' : '';
+    const priceStr = `${selectedCurrency} ${Number(p.price || 0).toFixed(2)}`;
+    const stars = Array.from({length: p.rating}).map(()=>'<span class="star">★</span>').join('');
+    const card = document.createElement('div'); card.className='card product-card';
+    card.innerHTML = `
+      <div class="thumb"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><div class="title">${esc(p.title)}</div><div>${newBadge}</div></div>
+      <div class="meta">${esc(p.seller)} ${levelBadge}</div>
+      <div class="price">${priceStr}</div>
+      <div class="small muted">${stars}</div>
+      <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary viewBtn" data-id="${p.id}">View</button>
+        <button class="btn contactSellerBtn" data-id="${p.id}">Contact</button>
+        <button class="btn btn-ghost wishlistBtn" data-id="${p.id}">♡</button>
+      </div>
+    `;
+    productGrid.appendChild(card);
+  });
+  attachGridEvents();
+}
+renderGrid(); // initial
+
+// --- Attach events for grid buttons ---
+function attachGridEvents(){
+  Array.from(document.querySelectorAll('.viewBtn')).forEach(b=> b.onclick = (e)=> {
+    const id = e.currentTarget.dataset.id;
+    const product = window.__SO_PRODUCTS.find(p=>p.id===id);
+    if(product) openProductModal(product);
+  });
+  Array.from(document.querySelectorAll('.contactSellerBtn')).forEach(b=> b.onclick = (e)=> {
+    const id = e.currentTarget.dataset.id;
+    const product = window.__SO_PRODUCTS.find(p=>p.id===id);
+    if(product) openProductModal(product);
+  });
+  Array.from(document.querySelectorAll('.wishlistBtn')).forEach(b=> b.onclick = (e)=> {
+    const id = e.currentTarget.dataset.id; toggleWishlist(id);
+  });
+}
+
+// --- Wishlist (local) ---
+function toggleWishlist(id){
+  const key='so_wishlist';
+  const cur = JSON.parse(localStorage.getItem(key) || '[]');
+  const idx = cur.indexOf(id);
+  if(idx === -1){ cur.push(id); localStorage.setItem(key, JSON.stringify(cur)); alert('Added to wishlist'); }
+  else { cur.splice(idx,1); localStorage.setItem(key, JSON.stringify(cur)); alert('Removed from wishlist'); }
+}
+
+// --- Open product modal with RFQ inside and supplier storefront link ---
+function openProductModal(product){
+  const modal = document.getElementById('productModal');
+  const modalContent = document.getElementById('modalContent');
+  const seller = SELLERS.find(s=>s.id===product.sellerId) || {};
+  const isNew = daysBetween(product.createdAt) <= 7;
+  const newFlag = isNew ? `<span class="level-badge level-new">NEW</span>` : '';
+  const levelBadge = product.level === 'gold' ? '<span class="level-badge level-gold">Gold Supplier</span>' : (product.level === 'verified' ? '<span class="level-badge level-verified">Verified Supplier</span>' : '<span class="level-badge">Supplier</span>');
+  const wa = product.contact.whatsapp ? product.contact.whatsapp.replace(/[^0-9]/g,'') : '';
+  modalContent.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2 id="productTitle">${esc(product.title)}</h2>
+      <div>${newFlag} ${levelBadge}</div>
+    </div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px">
+      <div style="flex:1;min-width:260px">
+        <img src="${esc(product.image)}" alt="${esc(product.title)}" style="width:100%;border-radius:10px;object-fit:cover;max-height:420px" />
+        <div class="price" style="margin-top:10px;font-size:1.2em">${currencySelect.value} ${Number(product.price).toFixed(2)}</div>
+        <p><strong>Category:</strong> ${esc(product.category)} → ${esc(product.subcategory)}</p>
+        <p><strong>Delivery:</strong> ${esc(product.delivery)}</p>
+      </div>
+      <div style="flex:1;min-width:260px">
+        <div class="seller-box">
+          <div class="logo">🏢</div>
+          <div>
+            <h4 style="margin:0 0 6px 0">${esc(product.company)}</h4>
+            <div class="small muted"><strong>Contact:</strong> ${esc(seller.name || product.seller)} • ${esc(seller.country || '')}</div>
+            <div style="margin-top:8px"><strong>Phone:</strong> ${esc(product.contact.phone)}</div>
+            <div><strong>Email:</strong> ${product.contact.email ? `<a href="mailto:${esc(product.contact.email)}">${esc(product.contact.email)}</a>` : 'N/A'}</div>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+              ${product.contact.email ? `<button class="btn" onclick="window.location.href='mailto:${esc(product.contact.email)}'">Email Seller</button>` : ''}
+              ${product.contact.whatsapp ? `<button class="btn" onclick="window.open('https://wa.me/${wa}','_blank')">WhatsApp</button>` : ''}
+              <button class="btn btn-primary" id="openRFQBtn">Request Quote</button>
+              <button class="btn" id="openStoreBtn">View Store</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <strong>Notes:</strong>
+          <p class="muted">${esc(product.delivery || 'Contact seller for shipping and lead times.')}</p>
+        </div>
+      </div>
+    </div>
+    <div id="reviewsAndQnA" style="margin-top:12px"></div>
+  `;
+  openModal('productModal');
+
+  // wire RFQ button to prefill RFQ modal
+  setTimeout(()=> {
+    const rfqBtn = document.getElementById('openRFQBtn');
+    if(rfqBtn){
+      rfqBtn.onclick = ()=>{
+        document.getElementById('rfqTitle').value = `RFQ: ${product.title}`;
+        document.getElementById('rfqDesc').value = `Request quotation for ${product.title}. Quantity: ...`;
+        openModal('rfqModal');
+      };
+    }
+    const storeBtn = document.getElementById('openStoreBtn');
+    if(storeBtn){
+      storeBtn.onclick = ()=> openSupplierStorefront(product.sellerId);
+    }
+    // render reviews & QnA below (simple functions available in later parts)
+    if(window.renderReviewsSection) window.renderReviewsSection(product.id);
+    if(window.renderQnASection) window.renderQnASection(product.id);
+  },50);
+}
+
+// --- Supplier storefront modal ---
+function openSupplierStorefront(sellerId){
+  const seller = SELLERS.find(s=>s.id===sellerId);
+  if(!seller) return alert('Seller not found');
+  const modal = document.getElementById('dashboardModal');
+  const content = document.getElementById('dashboardContent');
+  content.innerHTML = `<h3>${esc(seller.company)}</h3>
+    <p class="muted">Country: ${esc(seller.country)} • Contact: ${esc(seller.phone)}</p>
+    <div style="margin-top:8px"><strong>About:</strong><p class="muted">Sample supplier profile. Verified documents and certifications can be shown here.</p></div>
+    <h4 style="margin-top:12px">Products from ${esc(seller.company)}</h4>
+    <div id="storeProducts" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:8px"></div>
+  `;
+  const storeProducts = window.__SO_PRODUCTS.filter(p=> p.sellerId === sellerId);
+  const wrapper = document.getElementById('storeProducts');
+  wrapper.innerHTML = '';
+  storeProducts.forEach(p=>{
+    const card = document.createElement('div'); card.className='card';
+    card.innerHTML = `<div style="height:110px;overflow:hidden"><img src="${esc(p.image)}" alt="${esc(p.title)}" style="width:100%;height:100%;object-fit:cover" /></div><div style="font-weight:700;margin-top:6px">${esc(p.title)}</div><div class="small muted">${esc(p.subcategory)}</div><div style="margin-top:6px"><button class="btn" onclick="openProductFromStore('${p.id}')">View</button></div>`;
+    wrapper.appendChild(card);
+  });
+  openModal('dashboardModal');
+}
+window.openSupplierStorefront = openSupplierStorefront;
+window.openProductFromStore = (id)=> { const p = window.__SO_PRODUCTS.find(x=>x.id===id); if(p){ closeModal('dashboardModal'); openProductModal(p); } };
+
+// --- Post Ad / Start Sourcing auth enforcement ---
+async function ensureLoggedInFlow(callbackIfLogged){
+  // If Firebase auth available, check; else demo local check
+  const FB = window.__FB || {};
+  const auth = FB.auth;
+  let user = null;
+  if(auth && FB.onAuthStateChanged){
+    // try currentUser
+    user = auth.currentUser;
+    if(user){
+      callbackIfLogged(user); return;
+    } else {
+      // show auth modal and resolve after login (simple flow)
+      openModal('authModal');
+      // attach a one-time listener to firebase onAuthStateChanged if available
+      if(FB.onAuthStateChanged){
+        const un = FB.onAuthStateChanged(auth, u=>{
+          if(u){ un(); closeModal('authModal'); callbackIfLogged(u); }
+        });
+      } else {
+        // demo: check demo local storage
+        const demo = JSON.parse(localStorage.getItem('so_demo_user') || 'null');
+        if(demo){ closeModal('authModal'); callbackIfLogged(demo); }
+      }
+    }
+  } else {
+    // demo fallback
+    const demo = JSON.parse(localStorage.getItem('so_demo_user') || 'null');
+    if(demo){ callbackIfLogged(demo); return; }
+    // show auth modal
+    openModal('authModal');
+    // nothing else — user can register in demo mode (buttons wired in later parts)
+  }
+}
+
+// attach Post Ad buttons
+btnPostAdTop.addEventListener('click', ()=> {
+  ensureLoggedInFlow((user)=> {
+    // open post ad modal now that user is logged in
+    openModal('postAdModal');
+  });
+});
+startSourcingBtn.addEventListener('click', ()=> {
+  ensureLoggedInFlow((user)=> {
+    // small sourcing wizard placeholder: open dashboard or RFQ modal
+    openModal('dashboardModal');
+  });
+});
+
+// --- Social login button wiring (uses Firebase providers if available) ---
+async function socialSignIn(providerName){
+  const FB = window.__FB || {};
+  const auth = FB.auth;
+  if(!auth){ return alert('Social sign-in requires Firebase in production. Demo mode: simulate sign-in.'); }
+  try{
+    let provider;
+    if(providerName === 'google'){ provider = new GoogleAuthProvider(); }
+    else if(providerName === 'facebook'){ provider = new FacebookAuthProvider(); }
+    else if(providerName === 'yahoo'){ provider = new OAuthProvider('yahoo.com'); }
+    else if(providerName === 'linkedin'){ provider = new OAuthProvider('linkedin.com'); }
+    else { return alert('Provider not supported'); }
+    const res = await signInWithPopup(auth, provider);
+    // successful sign-in
+    addNotification(`Signed in as ${res.user.email || res.user.displayName}`);
+    closeModal('authModal');
+  }catch(err){
+    console.error('social sign-in error', err);
+    alert('Social sign-in failed: ' + (err.message || err));
+  }
+}
+
+// wire auth modal social buttons (exist in DOM)
+document.getElementById('btnGoogle')?.addEventListener('click', ()=> socialSignIn('google'));
+document.getElementById('btnFacebook')?.addEventListener('click', ()=> socialSignIn('facebook'));
+document.getElementById('btnYahoo')?.addEventListener('click', ()=> socialSignIn('yahoo'));
+document.getElementById('btnLinkedIn')?.addEventListener('click', ()=> socialSignIn('linkedin'));
+
+// --- Simple search & filter wiring ---
+document.getElementById('applyFilters')?.addEventListener('click', ()=> {
+  const country = document.getElementById('filterCountry').value;
+  const verifiedOnly = document.getElementById('filterVerified').value === '1';
+  const min = Number(document.getElementById('minPrice').value || 0);
+  const max = Number(document.getElementById('maxPrice').value || 0) || Infinity;
+  const q = (searchInput.value || '').trim().toLowerCase();
+  const res = window.__SO_PRODUCTS.filter(p=>{
+    if(country && (!p.contact || !p.contact.address || !p.contact.address.toLowerCase().includes(country.toLowerCase()))) return false;
+    if(verifiedOnly && !p.verified) return false;
+    if(p.price < min || p.price > max) return false;
+    if(!q) return true;
+    return (p.title + ' ' + p.subcategory + ' ' + p.seller + ' ' + p.company).toLowerCase().includes(q);
+  });
+  renderGrid(res);
+});
+searchBtn.addEventListener('click', ()=> { document.getElementById('applyFilters').click(); });
+searchInput.addEventListener('keydown', (e)=> { if(e.key==='Enter') { document.getElementById('applyFilters').click(); } });
+
+// --- Load more progressive ---
+document.getElementById('btnLoadMore')?.addEventListener('click', ()=>{
+  const shown = document.querySelectorAll('#productGrid .product-card').length;
+  renderGrid(window.__SO_PRODUCTS.slice(0, Math.min(window.__SO_PRODUCTS.length, shown + 40)));
+});
+
+// --- Expose some helpers for other parts ---
+window.addNotification = addNotification;
+window.openProductModal = openProductModal;
+window.renderGrid = renderGrid;
+window.ensureLoggedInFlow = ensureLoggedInFlow;
+
+</script>
+<!-- ===== Part 6: RFQ Modal, Reviews & QnA logic, Footer link handlers, Theme toggle, Location & Currency auto-detect ===== -->
+
+<!-- RFQ MODAL -->
+<div id="rfqModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="rfqTitleLbl">
+  <div class="panel" style="max-width:580px">
+    <h3 id="rfqTitleLbl">Request For Quotation (RFQ)</h3>
+    <form id="rfqForm">
+      <input id="rfqTitle" placeholder="Product name or title" />
+      <textarea id="rfqDesc" placeholder="Describe your request, quantity, and specifications" style="min-height:100px"></textarea>
+      <input id="rfqQty" placeholder="Quantity" type="number" />
+      <select id="rfqCurrency" class="select"><option>USD</option><option>EUR</option><option>XAF</option><option>NGN</option><option>KES</option><option>CNY</option><option>GBP</option><option>INR</option></select>
+      <div style="margin-top:10px;display:flex;justify-content:flex-end;gap:8px">
+        <button type="button" class="btn" onclick="closeModal('rfqModal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit RFQ</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ===== Part 6 Script =====
+
+// --- Reviews & QnA simplified local storage (demo mode) ---
+function getLocal(key){ return JSON.parse(localStorage.getItem(key) || '{}'); }
+function setLocal(key,val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+window.renderReviewsSection = function(productId){
+  const wrapId='reviewsWrap'; document.getElementById(wrapId)?.remove();
+  const container = document.getElementById('reviewsAndQnA');
+  const reviews = getLocal('so_reviews')[productId] || [];
+  const wrap = document.createElement('div'); wrap.id=wrapId; wrap.style.marginTop='16px';
+  wrap.innerHTML = `<h4>Reviews</h4>`;
+  if(reviews.length){
+    reviews.forEach(r=>{
+      const el = document.createElement('div'); el.className='card';
+      el.innerHTML = `<div style="font-weight:700">${esc(r.user)}</div>
+      <div class="small muted">${'★'.repeat(r.rating)} (${r.rating}/5)</div>
+      <div>${esc(r.comment)}</div>`;
+      wrap.appendChild(el);
+    });
+  } else {
+    wrap.innerHTML += `<div class="small muted">No reviews yet.</div>`;
+  }
+  // form
+  const f=document.createElement('div'); f.innerHTML = `
+    <select id="revRating"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select>
+    <input id="revUser" placeholder="Name" />
+    <textarea id="revComment" placeholder="Write your review"></textarea>
+    <button id="revSubmit" class="btn btn-primary">Submit Review</button>
+  `;
+  wrap.appendChild(f);
+  container.appendChild(wrap);
+  document.getElementById('revSubmit').onclick=()=>{
+    const all=getLocal('so_reviews'); all[productId]=all[productId]||[];
+    all[productId].push({user:document.getElementById('revUser').value||'Anonymous',rating:+document.getElementById('revRating').value,comment:document.getElementById('revComment').value});
+    setLocal('so_reviews',all); renderReviewsSection(productId);
+  };
+};
+
+window.renderQnASection = function(productId){
+  const wrapId='qnaWrap'; document.getElementById(wrapId)?.remove();
+  const container = document.getElementById('reviewsAndQnA');
+  const qnas = getLocal('so_qna')[productId] || [];
+  const wrap = document.createElement('div'); wrap.id=wrapId; wrap.style.marginTop='16px';
+  wrap.innerHTML = `<h4>Q&A</h4>`;
+  qnas.forEach(q=>{
+    const el=document.createElement('div'); el.className='card'; el.innerHTML=`<div><strong>Q:</strong> ${esc(q.q)}</div><div class="small muted">Asked by ${esc(q.by)}</div>${q.a?'<div><strong>A:</strong> '+esc(q.a)+'</div>':''}`;
+    wrap.appendChild(el);
+  });
+  const f=document.createElement('div'); f.innerHTML=`
+    <input id="qnaBy" placeholder="Your name" />
+    <textarea id="qnaQ" placeholder="Ask a question"></textarea>
+    <button id="qnaSubmit" class="btn btn-primary">Ask</button>`;
+  wrap.appendChild(f);
+  container.appendChild(wrap);
+  document.getElementById('qnaSubmit').onclick=()=>{
+    const all=getLocal('so_qna'); all[productId]=all[productId]||[];
+    all[productId].push({by:document.getElementById('qnaBy').value||'Anonymous',q:document.getElementById('qnaQ').value});
+    setLocal('so_qna',all); renderQnASection(productId);
+  };
+};
+
+// --- RFQ form handling ---
+document.getElementById('rfqForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const title=document.getElementById('rfqTitle').value;
+  const desc=document.getElementById('rfqDesc').value;
+  addNotification(`RFQ submitted: ${title}`);
+  closeModal('rfqModal');
+});
+
+// --- Footer links open modals ---
+document.getElementById('openTerms')?.addEventListener('click',(e)=>{e.preventDefault();openModal('termsModal');});
+document.getElementById('openPrivacy')?.addEventListener('click',(e)=>{e.preventDefault();openModal('privacyModal');});
+
+// --- Theme toggle ---
+document.getElementById('btnTheme')?.addEventListener('click',()=>{
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('so_theme', document.documentElement.classList.contains('dark')?'dark':'light');
+});
+
+// --- Auto-detect location & currency (using ipapi.co) ---
+(async()=>{
+  try{
+    const res=await fetch('https://ipapi.co/json/');
+    const loc=await res.json();
+    document.getElementById('locText').textContent=`${loc.city}, ${loc.country_name}`;
+    document.getElementById('countryFlag').style.backgroundImage=`url(https://flagcdn.com/w20/${loc.country_code.toLowerCase()}.png)`;
+    document.getElementById('countryFlag').style.display='inline-block';
+    if(loc.currency){ currencySelect.value=loc.currency; }
+  }catch(e){
+    console.warn('location fetch failed',e);
+    document.getElementById('locText').textContent='Location unavailable';
+  }
+})();
+</script>
+
+<!-- ===== Part 7 will cover Auth modal switching, Demo login/register fallback, and utility functions ===== -->
+<!-- ===== Part 7: Auth modal switching (login/register), demo login/register fallback, utility modal helpers ===== -->
+<script>
+// --- Modal open/close helpers ---
+function openModal(id){ document.getElementById(id).classList.add('active'); }
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+
+// --- Switch between Login & Register tabs ---
+const loginForm=document.getElementById('loginForm');
+const registerForm=document.getElementById('registerForm');
+document.getElementById('tabLogin')?.addEventListener('click',()=>{
+  loginForm.style.display='block'; registerForm.style.display='none';
+});
+document.getElementById('tabRegister')?.addEventListener('click',()=>{
+  loginForm.style.display='none'; registerForm.style.display='block';
+});
+
+// --- Demo fallback auth (if Firebase not configured) ---
+function updateAuthUI(user){
+  if(!authArea) return;
+  authArea.innerHTML='';
+  if(user){
+    const span=document.createElement('span'); span.textContent=user.email||user.name||'User';
+    const logoutBtn=document.createElement('button'); logoutBtn.className='btn'; logoutBtn.textContent='Logout';
+    logoutBtn.onclick=()=>{ localStorage.removeItem('so_demo_user'); updateAuthUI(null); };
+    authArea.appendChild(span); authArea.appendChild(logoutBtn);
+  } else {
+    const loginBtn=document.createElement('button'); loginBtn.className='btn btn-ghost'; loginBtn.textContent='Login / Register';
+    loginBtn.onclick=()=>openModal('authModal');
+    authArea.appendChild(loginBtn);
+  }
+}
+
+// handle email login/register in demo
+document.getElementById('btnLoginEmail')?.addEventListener('click',()=>{
+  const email=document.getElementById('loginEmail').value;
+  const pass=document.getElementById('loginPass').value;
+  if(email && pass){ const u={email}; localStorage.setItem('so_demo_user',JSON.stringify(u)); closeModal('authModal'); updateAuthUI(u); addNotification('Logged in (demo) as '+email); }
+});
+document.getElementById('btnRegisterEmail')?.addEventListener('click',()=>{
+  const email=document.getElementById('regEmail').value;
+  const pass=document.getElementById('regPass').value;
+  if(email && pass.length>=6){ const u={email}; localStorage.setItem('so_demo_user',JSON.stringify(u)); closeModal('authModal'); updateAuthUI(u); addNotification('Account created (demo) for '+email); }
+});
+
+// init auth UI
+updateAuthUI(JSON.parse(localStorage.getItem('so_demo_user')||'null'));
+
+</script>
+
+<!-- ===== Part 8 will include Dashboard stats, Saved searches & alerts, Blog/News auto-load, and end of body ===== -->
+<!-- ===== Part 8: Dashboard stats, Saved searches & alerts, Blog/News, End of body ===== -->
+<script>
+// --- Dashboard content (simple stats demo) ---
+function renderDashboard(){
+  const content=document.getElementById('dashboardContent');
+  if(!content) return;
+  const wishlist=JSON.parse(localStorage.getItem('so_wishlist')||'[]');
+  const rfqs=JSON.parse(localStorage.getItem('so_rfqs')||'[]');
+  content.innerHTML=`
+    <h4>Your Stats</h4>
+    <ul>
+      <li>Wishlist items: ${wishlist.length}</li>
+      <li>RFQs submitted: ${rfqs.length}</li>
+    </ul>
+    <h4>Saved Searches</h4>
+    <div id="savedSearchesList"></div>
+    <div style="margin-top:8px"><input id="saveSearchName" placeholder="Save current search as" /> <button class="btn" id="btnSaveSearch">Save</button></div>
+  `;
+  document.getElementById('btnSaveSearch').onclick=()=>{
+    const name=document.getElementById('saveSearchName').value||'Search';
+    const q=searchInput.value; const entry={name,q,ts:Date.now()};
+    const list=JSON.parse(localStorage.getItem('so_saved')||'[]'); list.push(entry);
+    localStorage.setItem('so_saved',JSON.stringify(list));
+    renderDashboard();
+  };
+  const list=JSON.parse(localStorage.getItem('so_saved')||'[]');
+  const box=document.getElementById('savedSearchesList');
+  if(list.length){ list.forEach(s=>{ const el=document.createElement('div'); el.className='card'; el.innerHTML=`${esc(s.name)} — ${esc(s.q)} <button class="btn" onclick="restoreSearch('${s.q}')">Run</button>`; box.appendChild(el); }); }
+  else { box.textContent='No saved searches.'; }
+}
+window.restoreSearch=(q)=>{ searchInput.value=q; document.getElementById('applyFilters').click(); closeModal('dashboardModal'); };
+
+// show dashboard when button clicked
+document.getElementById('btnDashboard')?.addEventListener('click',()=>{ renderDashboard(); openModal('dashboardModal'); });
+
+// --- Save RFQs into local storage (demo) ---
+document.getElementById('rfqForm')?.addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const rfq={title:document.getElementById('rfqTitle').value,desc:document.getElementById('rfqDesc').value,ts:Date.now()};
+  const rfqs=JSON.parse(localStorage.getItem('so_rfqs')||'[]'); rfqs.push(rfq); localStorage.setItem('so_rfqs',JSON.stringify(rfqs));
+  addNotification('RFQ saved locally (demo).'); closeModal('rfqModal');
+});
+
+// --- Populate RFQ marketplace list ---
+(function(){
+  const rfqList=document.getElementById('rfqList'); if(!rfqList) return;
+  const rfqs=JSON.parse(localStorage.getItem('so_rfqs')||'[]');
+  rfqList.innerHTML='';
+  if(rfqs.length){
+    rfqs.forEach(r=>{ const el=document.createElement('div'); el.className='card'; el.innerHTML=`<div style="font-weight:700">${esc(r.title)}</div><div>${esc(r.desc)}</div><div class="small muted">${new Date(r.ts).toLocaleString()}</div>`; rfqList.appendChild(el); });
+  } else {
+    rfqList.innerHTML='<div class="small muted">No RFQs posted yet.</div>';
+  }
+})();
+
+// --- Blog/News auto load placeholder (demo static above) ---
+
+// --- Expose dashboard for re-render ---
+window.renderDashboard=renderDashboard;
+</script>
+<style>
+/* blinking effect for NEW products */
+.level-new {
+  animation: blink 1s step-start infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+</style>
+
+<!-- ===== Education & Books Section ===== -->
+<section class="container">
+  <h2>📚 Education & Books</h2>
+  <div id="eduGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px"></div>
+</section>
+
+<!-- ===== Photo Search (Lens) Input ===== -->
+<script>
+const lensBtn=document.createElement('button');
+lensBtn.className='btn'; lensBtn.textContent='📷';
+lensBtn.style.marginLeft='4px';
+lensBtn.onclick=()=> document.getElementById('photoInput').click();
+document.getElementById('searchBox').appendChild(lensBtn);
+const input=document.createElement('input'); input.type='file'; input.id='photoInput'; input.accept='image/*'; input.style.display='none';
+document.body.appendChild(input);
+input.onchange=()=>{
+  if(input.files.length){
+    alert('Photo search demo: showing random matches for your image.');
+    const subset=window.__SO_PRODUCTS.sort(()=>0.5-Math.random()).slice(0,20);
+    renderGrid(subset);
+  }
+};
+</script>
+
+<!-- ===== RFQ Marketplace (20+ samples) ===== -->
+<script>
+(function(){
+  const rfqs=[
+    {title:"1000pcs USB-C Cables",desc:"Looking for durable 1m USB-C cables, white color.",ts:Date.now()-86400000},
+    {title:"500 Leather Handbags",desc:"Genuine leather handbags for women, assorted colors.",ts:Date.now()-7200000},
+    {title:"20 Industrial Generators",desc:"Heavy duty diesel generators, 20-50kVA.",ts:Date.now()-500000},
+    {title:"Medical Masks 50,000pcs",desc:"Disposable 3-ply medical masks with certification.",ts:Date.now()-200000},
+    {title:"Fresh Mangoes 5 Tons",desc:"Export quality mangoes, West Africa origin.",ts:Date.now()-6000000},
+    {title:"Laptop Bulk Purchase",desc:"Need 200 units Core i7 laptops with warranty.",ts:Date.now()-3500000},
+    {title:"Shoes 2000 Pairs",desc:"Trendy sneakers in assorted sizes.",ts:Date.now()-1230000},
+    {title:"Office Chairs 500pcs",desc:"Ergonomic mesh chairs, bulk order.",ts:Date.now()-4300000},
+    {title:"Solar Panels 100 units",desc:"High efficiency 400W panels.",ts:Date.now()-8600000},
+    {title:"Books - Math Textbooks",desc:"200 copies of IB Math AA textbooks.",ts:Date.now()-2100000},
+    {title:"Hair Extensions 300kg",desc:"Natural human hair, Remy quality.",ts:Date.now()-7800000},
+    {title:"Car Tires 1000pcs",desc:"Radial tires 16-inch for sedans.",ts:Date.now()-3300000},
+    {title:"Rice Bags 20 tons",desc:"Long grain parboiled rice.",ts:Date.now()-9200000},
+    {title:"Skincare Products Bulk",desc:"Organic lotions and creams.",ts:Date.now()-4900000},
+    {title:"Construction Cement",desc:"50kg bags, FOB price request.",ts:Date.now()-1100000},
+    {title:"Tablets for School",desc:"300 units Android tablets 10-inch.",ts:Date.now()-430000},
+    {title:"Bicycles 150pcs",desc:"Mountain bikes for wholesale.",ts:Date.now()-2400000},
+    {title:"Fertilizers 5 tons",desc:"Urea NPK mix.",ts:Date.now()-6300000},
+    {title:"Coffee Beans 3 tons",desc:"Arabica coffee beans, South America.",ts:Date.now()-780000},
+    {title:"Paint Buckets 2000L",desc:"Emulsion paint in 20L buckets.",ts:Date.now()-350000}
+  ];
+  localStorage.setItem('so_rfqs',JSON.stringify(rfqs));
+  const rfqList=document.getElementById('rfqList');
+  rfqList.innerHTML='';
+  rfqs.forEach(r=>{ const el=document.createElement('div'); el.className='card'; el.innerHTML=`<div style="font-weight:700">${esc(r.title)}</div><div>${esc(r.desc)}</div><div class="small muted">${new Date(r.ts).toLocaleString()}</div>`; rfqList.appendChild(el); });
+})();
+</script>
+
+<!-- ===== Education & Books 20+ Samples ===== -->
+<script>
+(function(){
+  const eduSamples=[
+    {title:"Intro to AI",cat:"Courses",img:"https://picsum.photos/seed/ai101/200/140"},
+    {title:"Advanced Data Science",cat:"Courses",img:"https://picsum.photos/seed/ds202/200/140"},
+    {title:"History of Africa",cat:"Books",img:"https://picsum.photos/seed/africa/200/140"},
+    {title:"Global Economics",cat:"Books",img:"https://picsum.photos/seed/economics/200/140"},
+    {title:"How to Start Export Business",cat:"Guides",img:"https://picsum.photos/seed/export/200/140"},
+    {title:"E-Learning on Marketing",cat:"Courses",img:"https://picsum.photos/seed/marketing/200/140"},
+    {title:"Physics Workbook",cat:"Books",img:"https://picsum.photos/seed/physics/200/140"},
+    {title:"Mathematics Series",cat:"Books",img:"https://picsum.photos/seed/math/200/140"},
+    {title:"Cooking Basics",cat:"Guides",img:"https://picsum.photos/seed/cooking/200/140"},
+    {title:"Language Learning App",cat:"Courses",img:"https://picsum.photos/seed/lang/200/140"},
+    {title:"IB Biology Notes",cat:"Books",img:"https://picsum.photos/seed/biology/200/140"},
+    {title:"Web Development Bootcamp",cat:"Courses",img:"https://picsum.photos/seed/web/200/140"},
+    {title:"Fashion Design Guide",cat:"Guides",img:"https://picsum.photos/seed/fashion/200/140"},
+    {title:"Leadership Training",cat:"Courses",img:"https://picsum.photos/seed/lead/200/140"},
+    {title:"Finance for Beginners",cat:"Books",img:"https://picsum.photos/seed/finance/200/140"},
+    {title:"IELTS Prep Book",cat:"Books",img:"https://picsum.photos/seed/ielts/200/140"},
+    {title:"Digital Marketing eBook",cat:"Guides",img:"https://picsum.photos/seed/dm/200/140"},
+    {title:"Supply Chain Mgmt",cat:"Courses",img:"https://picsum.photos/seed/sc/200/140"},
+    {title:"Chemistry Experiments",cat:"Books",img:"https://picsum.photos/seed/chem/200/140"},
+    {title:"Entrepreneurship Basics",cat:"Guides",img:"https://picsum.photos/seed/ent/200/140"}
+  ];
+  const grid=document.getElementById('eduGrid');
+  eduSamples.forEach(e=>{
+    const el=document.createElement('div'); el.className='card';
+    el.innerHTML=`<div style="height:120px;overflow:hidden"><img src="${e.img}" style="width:100%;height:100%;object-fit:cover"/></div>
+      <div style="font-weight:700;margin-top:6px">${esc(e.title)}</div>
+      <div class="small muted">${e.cat}</div>`;
+    grid.appendChild(el);
+  });
+})();
+</script>
+
+<!-- ===== Auto language change by browser locale ===== -->
+<script>
+(function(){
+  const lang=navigator.language||navigator.userLanguage;
+  if(lang.startsWith('fr')){ document.body.setAttribute('lang','fr'); addNotification('Langue changée en Français'); }
+  else if(lang.startsWith('es')){ document.body.setAttribute('lang','es'); addNotification('Idioma cambiado a Español'); }
+  else if(lang.startsWith('zh')){ document.body.setAttribute('lang','zh'); addNotification('语言切换为中文'); }
+  else { document.body.setAttribute('lang','en'); }
+})();
+</script>
+
+<!-- ===== Terms & Privacy Modals Content ===== -->
+<div id="termsModal" class="modal"><div class="panel"><h3>Terms & Conditions</h3>
+<p>Welcome to SO GROUP Marketplace. By using this site, you agree to our rules:</p>
+<ul>
+<li>Users must register before posting ads.</li>
+<li>Suppliers are responsible for accuracy of their listings.</li>
+<li>Buyers should verify suppliers before payment.</li>
+<li>SO GROUP is not liable for third-party transactions.</li>
+</ul>
+<button class="btn" onclick="closeModal('termsModal')">Close</button>
+</div></div>
+
+<div id="privacyModal" class="modal"><div class="panel"><h3>Privacy Policy</h3>
+<p>We value your privacy:</p>
+<ul>
+<li>Personal data is stored securely.</li>
+<li>We do not sell user data to third parties.</li>
+<li>Cookies are used for login and preferences.</li>
+<li>Users can request deletion of their account.</li>
+</ul>
+<button class="btn" onclick="closeModal('privacyModal')">Close</button>
+</div></div>
+<!-- ===== Multi-language Dictionary & Auto-translation ===== -->
+<script>
+// Dictionary: extend as needed
+const I18N = {
+  en: {
+    browse:"Browse Categories",
+    chat:"Chat with suppliers",
+    trade:"Trade assurance",
+    shipping:"Flexible shipping",
+    education:"Education & Books",
+    rfq:"Request For Quotation",
+    postAd:"Post Ad",
+    sourcing:"Start Sourcing Now",
+    login:"Login / Register",
+    dashboard:"Dashboard",
+    notifications:"Notifications"
+  },
+  fr: {
+    browse:"Parcourir les catégories",
+    chat:"Discuter avec les fournisseurs",
+    trade:"Assurance commerciale",
+    shipping:"Expédition flexible",
+    education:"Éducation & Livres",
+    rfq:"Demande de devis",
+    postAd:"Publier une annonce",
+    sourcing:"Commencer l'approvisionnement",
+    login:"Connexion / Inscription",
+    dashboard:"Tableau de bord",
+    notifications:"Notifications"
+  },
+  es: {
+    browse:"Explorar categorías",
+    chat:"Chatear con proveedores",
+    trade:"Garantía comercial",
+    shipping:"Envío flexible",
+    education:"Educación & Libros",
+    rfq:"Solicitud de cotización",
+    postAd:"Publicar anuncio",
+    sourcing:"Comenzar abastecimiento",
+    login:"Iniciar sesión / Registrarse",
+    dashboard:"Panel de control",
+    notifications:"Notificaciones"
+  },
+  zh: {
+    browse:"浏览分类",
+    chat:"与供应商聊天",
+    trade:"贸易保障",
+    shipping:"灵活运输",
+    education:"教育与书籍",
+    rfq:"询价请求",
+    postAd:"发布广告",
+    sourcing:"立即采购",
+    login:"登录 / 注册",
+    dashboard:"控制面板",
+    notifications:"通知"
+  }
+};
+
+// Apply translations to elements with [data-i18n] attribute
+function applyTranslations(lang){
+  const dict=I18N[lang]||I18N['en'];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(dict[key]) el.textContent=dict[key];
+  });
+}
+
+// Detect browser language
+let userLang=(navigator.language||'en').substr(0,2);
+if(!I18N[userLang]) userLang='en';
+applyTranslations(userLang);
+
+// Add manual language selector
+const langSel=document.createElement('select');
+langSel.innerHTML='<option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="zh">中文</option>';
+langSel.value=userLang;
+langSel.style.marginLeft='8px';
+langSel.onchange=()=>{ applyTranslations(langSel.value); localStorage.setItem('so_lang',langSel.value); };
+document.getElementById('navbar').appendChild(langSel);
+
+// Restore saved language if available
+const savedLang=localStorage.getItem('so_lang');
+if(savedLang && I18N[savedLang]){ langSel.value=savedLang; applyTranslations(savedLang); }
+</script>
+<!-- ===== PATCH: Add-ons — auto-location, multi-lang, lens search, RFQs, Education samples, auth checks, NEW badges ===== -->
+<script>
+(function(){
+  // ---- Utilities ----
+  function safeGet(id){ return document.getElementById(id); }
+  function esc(s){ return s?String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') : ''; }
+  function daysAgo(ts){ return Math.floor((Date.now() - (ts||0)) / (24*60*60*1000)); }
+  function exists(selector){ return !!document.querySelector(selector); }
+
+  // ---- 1) Multi-language dictionary & runtime API ----
+  const I18N = {
+    en: { browse:"Browse Categories", chat:"Chat with suppliers", trade:"Trade assurance", shipping:"Flexible shipping", education:"Education & Books", rfq:"Request For Quotation", postAd:"Post Ad", sourcing:"Start Sourcing Now", login:"Login / Register", dashboard:"Dashboard", notifications:"Notifications" },
+    fr: { browse:"Parcourir les catégories", chat:"Discuter avec les fournisseurs", trade:"Assurance commerciale", shipping:"Expédition flexible", education:"Éducation & Livres", rfq:"Demande de devis", postAd:"Publier une annonce", sourcing:"Commencer l'approvisionnement", login:"Connexion / Inscription", dashboard:"Tableau de bord", notifications:"Notifications" },
+    es: { browse:"Explorar categorías", chat:"Chatear con proveedores", trade:"Garantía comercial", shipping:"Envío flexible", education:"Educación & Libros", rfq:"Solicitud de cotización", postAd:"Publicar anuncio", sourcing:"Comenzar abastecimiento", login:"Iniciar sesión / Registrarse", dashboard:"Panel de control", notifications:"Notificaciones" },
+    zh: { browse:"浏览分类", chat:"与供应商聊天", trade:"贸易保障", shipping:"灵活运输", education:"教育与书籍", rfq:"询价请求", postAd:"发布广告", sourcing:"立即采购", login:"登录 / 注册", dashboard:"控制面板", notifications:"通知" }
+  };
+  function applyTranslations(lang){
+    const dict = I18N[lang] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if(key && dict[key]) el.textContent = dict[key];
+    });
+  }
+  // init language selection: prefer saved, then geo, then browser
+  const savedLang = localStorage.getItem('so_lang') || (navigator.language||'en').substr(0,2);
+  const initialLang = (I18N[savedLang] ? savedLang : 'en');
+  applyTranslations(initialLang);
+
+  // If you have a language select with id 'langSelect' or 'globalLangSel', sync to it.
+  const langNodes = ['globalLangSel','langSelect','langSel'].map(id=>safeGet(id)).filter(Boolean);
+  langNodes.forEach(node=>{
+    node.value = initialLang;
+    node.addEventListener('change', ()=>{ applyTranslations(node.value); localStorage.setItem('so_lang', node.value); });
+  });
+
+  // If no selector in DOM, create a small selector in header (non-intrusive)
+  (function ensureLangSelector(){
+    if(langNodes.length) return;
+    const header = document.querySelector('.header .wrap') || document.body;
+    const sel = document.createElement('select');
+    sel.id='globalLangSel';
+    sel.className='select';
+    sel.style.marginLeft='8px';
+    sel.innerHTML = '<option value="en">EN</option><option value="fr">FR</option><option value="es">ES</option><option value="zh">中文</option>';
+    sel.value = initialLang;
+    sel.addEventListener('change', ()=>{ applyTranslations(sel.value); localStorage.setItem('so_lang', sel.value); });
+    header.appendChild(sel);
+  })();
+
+  // ---- 2) Auto-location & currency detection (ipapi.co) ----
+  (async function detectLocationAndCurrency(){
+    const locText = safeGet('locText');
+    const flagEl = safeGet('countryFlag');
+    const currencySelect = safeGet('currencySelect');
+    const langSelect = safeGet('globalLangSel') || safeGet('langSelect') || safeGet('langSel');
+    try{
+      const r = await fetch('https://ipapi.co/json/');
+      if(!r.ok) throw new Error('geo failed');
+      const loc = await r.json();
+      if(locText) locText.textContent = `${loc.city || ''}${loc.city? ', ':''}${loc.country_name || loc.country}`;
+      if(flagEl && loc.country_code){ flagEl.style.display='inline-block'; flagEl.style.backgroundImage = `url(https://flagcdn.com/w20/${loc.country_code.toLowerCase()}.png)`; }
+      if(currencySelect && loc.currency){ currencySelect.value = loc.currency; localStorage.setItem('so_currency', loc.currency); /* trigger change below */ }
+      const langCode = (loc.languages || (navigator.language||'en')).split(',')[0].substr(0,2);
+      if(langSelect && I18N[langCode]){ langSelect.value = langCode; applyTranslations(langCode); localStorage.setItem('so_lang',langCode); }
+      // re-render prices if function exists
+      if(typeof window.renderGrid === 'function') window.renderGrid(window.__SO_PRODUCTS || []);
+    }catch(err){
+      if(locText) locText.textContent = 'Location unavailable';
+      console.warn('Location autoload failed:', err && err.message);
+    }
+  })();
+
+  // ---- 3) Currency live-change: immediate price updates ----
+  (function setupCurrencyLive(){
+    const cur = safeGet('currencySelect');
+    if(!cur) return;
+    // restore saved
+    const saved = localStorage.getItem('so_currency');
+    if(saved) cur.value = saved;
+    cur.addEventListener('change', ()=>{
+      localStorage.setItem('so_currency', cur.value);
+      if(typeof window.renderGrid === 'function') window.renderGrid(window.__SO_PRODUCTS || []);
+    });
+  })();
+
+  // ---- 4) Lens / Photo search: attach to existing button (photoSearchBtn) or create input ----
+  (function setupLens(){
+    // find file input ids if present, else create
+    let photoBtn = safeGet('photoSearchBtn') || document.querySelector('button[title*="photo"], button[title*="Photo"], button#photoSearchBtn');
+    const searchBox = document.querySelector('.searchbar') || safeGet('searchBox') || document.body;
+    if(!photoBtn){
+      // Create unobtrusive camera button next to search
+      photoBtn = document.createElement('button'); photoBtn.id='photoSearchBtn';
+      photoBtn.className='btn'; photoBtn.title='Search by photo'; photoBtn.textContent='📷';
+      // try to place after search input if exists
+      const ref = searchBox.querySelector('input[type="text"], input#searchInput');
+      if(ref && ref.parentNode) ref.parentNode.appendChild(photoBtn);
+      else searchBox.appendChild(photoBtn);
+    }
+
+    // Create hidden file input if none
+    let fileInput = safeGet('photoInput') || safeGet('photoInputFinal') || document.createElement('input');
+    fileInput.id = fileInput.id || 'photoInput';
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    if(!safeGet(fileInput.id)) document.body.appendChild(fileInput);
+
+    // Palette mapping
+    const palette = { red:[200,60,60], blue:[50,110,200], green:[60,160,80], gray:[150,150,150] };
+    function colorDistance(a,b){ return Math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2); }
+    function nearestColor(r,g,b){
+      let best=null, key='gray';
+      Object.entries(palette).forEach(([k,cent])=>{ const d=colorDistance([r,g,b],cent); if(best===null || d<best){ best=d; key=k; } });
+      return key;
+    }
+
+    photoBtn.addEventListener('click', ()=> fileInput.click());
+    fileInput.addEventListener('change', (ev)=>{
+      const f = ev.target.files && ev.target.files[0];
+      if(!f){ alert('No image selected'); return; }
+      if(!f.type.startsWith('image/')){ alert('Please select an image file'); return; }
+      const fr = new FileReader();
+      fr.onload = function(e){
+        const img = new Image();
+        img.onload = function(){
+          const cw = Math.min(200, img.width), ch = Math.min(200, img.height);
+          const cnv = document.createElement('canvas'); cnv.width = cw; cnv.height = ch;
+          const ctx = cnv.getContext('2d'); ctx.drawImage(img,0,0,cw,ch);
+          const data = ctx.getImageData(0,0,cw,ch).data;
+          let r=0,g=0,b=0,c=0,step=6;
+          for(let y=0;y<ch;y+=step) for(let x=0;x<cw;x+=step){
+            const i=(y*cw + x)*4; r+=data[i]; g+=data[i+1]; b+=data[i+2]; c++;
+          }
+          r=Math.round(r/c); g=Math.round(g/c); b=Math.round(b/c);
+          const colorName = nearestColor(r,g,b);
+          // filter local products by dominantColor (demo)
+          const products = (window.__SO_PRODUCTS || []).filter(p => (p.dominantColor||'').toLowerCase() === colorName);
+          if(products.length === 0){
+            alert('No exact color matches — showing nearest related products.');
+            (window.renderGrid || function(){})((window.__SO_PRODUCTS||[]).slice(0,20));
+          } else {
+            window.renderGrid && window.renderGrid(products.slice(0,40));
+            alert('Showing '+products.length+' matches based on image color: ' + colorName);
+          }
+        };
+        img.src = e.target.result;
+      };
+      fr.readAsDataURL(f);
+    });
+  })();
+
+  // ---- 5) Ensure NEW badges blink for recent products (without changing your render function) ----
+  // This will scan #productGrid after render and add a blinking NEW badge for items whose data-created attribute or product.createdAt is within 7 days.
+  function addBlinkNewBadges(){
+    try{
+      const grid = safeGet('productGrid');
+      if(!grid) return;
+      // If your product elements include data-id attributes, use them to find product createdAt
+      const cards = grid.querySelectorAll('.card, .product-card, .productCard');
+      cards.forEach(card=>{
+        // avoid duplicate badge
+        if(card.querySelector('.__patch-new')) return;
+        // try to read a data-created or data-id
+        const did = card.dataset && card.dataset.id;
+        let isNew = false;
+        if(did){
+          const p = (window.__SO_PRODUCTS || []).find(x => x.id == did);
+          if(p && p.createdAt && daysAgo(p.createdAt) <= 7) isNew = true;
+        } else {
+          // fallback: check for price or title timestamp in DOM using existing class names not reliable; skip
+        }
+        if(isNew){
+          const span = document.createElement('span');
+          span.className = '__patch-new level-badge level-new';
+          span.style.marginLeft = '8px';
+          span.textContent = 'NEW';
+          // place it visibly at top-right of card title if exists
+          const title = card.querySelector('.title') || card;
+          title.appendChild(span);
+        }
+      });
+    }catch(e){ console.warn('addBlinkNewBadges err', e && e.message); }
+  }
+  // run after small delay to let existing renderGrid finish if it's being called on load
+  setTimeout(addBlinkNewBadges, 900);
+  // also observe productGrid for changes to re-apply badges
+  (function observeGrid(){
+    const grid = safeGet('productGrid');
+    if(!grid) return;
+    const obs = new MutationObserver(()=>{ setTimeout(addBlinkNewBadges, 200); });
+    obs.observe(grid, { childList:true, subtree:true });
+  })();
+
+  // ---- 6) Load 20+ sample RFQs (only if not already present) ----
+  (function seedRFQs(){
+    try{
+      const key = 'so_rfqs';
+      const exist = JSON.parse(localStorage.getItem(key) || 'null');
+      if(Array.isArray(exist) && exist.length > 0) {
+        // already present; render below
+      } else {
+        const samples = [
+          {title:"1000pcs USB-C Cables", desc:"Durable 1m USB-C cables, white color", ts:Date.now()-86400000},
+          {title:"500 Leather Handbags", desc:"Genuine leather handbags", ts:Date.now()-7200000},
+          {title:"20 Industrial Generators", desc:"Diesel generators 20-50kVA", ts:Date.now()-500000},
+          {title:"Medical Masks 50,000pcs", desc:"3-ply surgical masks", ts:Date.now()-200000},
+          {title:"Fresh Mangoes 5 Tons", desc:"Export quality mangoes", ts:Date.now()-6000000},
+          {title:"Laptop Bulk Purchase", desc:"200 units, Core i7", ts:Date.now()-3500000},
+          {title:"Shoes 2000 Pairs", desc:"Assorted sizes, sneakers", ts:Date.now()-1230000},
+          {title:"Office Chairs 500pcs", desc:"Ergonomic mesh chairs", ts:Date.now()-4300000},
+          {title:"Solar Panels 100 units", desc:"400W modules", ts:Date.now()-8600000},
+          {title:"Books - Math Textbooks", desc:"200 copies of IB Math", ts:Date.now()-2100000},
+          {title:"Hair Extensions 300kg", desc:"Remy human hair", ts:Date.now()-7800000},
+          {title:"Car Tires 1000pcs", desc:"Radial tires 16-inch", ts:Date.now()-3300000},
+          {title:"Rice Bags 20 tons", desc:"Long grain parboiled rice", ts:Date.now()-9200000},
+          {title:"Skincare Products Bulk", desc:"Organic lotions", ts:Date.now()-4900000},
+          {title:"Construction Cement", desc:"50kg bags FOB", ts:Date.now()-1100000},
+          {title:"Tablets for School", desc:"300 Android tablets 10-inch", ts:Date.now()-430000},
+          {title:"Bicycles 150pcs", desc:"Mountain bikes", ts:Date.now()-2400000},
+          {title:"Fertilizers 5 tons", desc:"Urea NPK mix", ts:Date.now()-6300000},
+          {title:"Coffee Beans 3 tons", desc:"Arabica beans", ts:Date.now()-780000},
+          {title:"Paint Buckets 2000L", desc:"Emulsion paint", ts:Date.now()-350000}
+        ];
+        localStorage.setItem(key, JSON.stringify(samples));
+      }
+      // render RFQs into #rfqList if exists
+      const rfqList = safeGet('rfqList');
+      if(rfqList){
+        rfqList.innerHTML = '';
+        const all = JSON.parse(localStorage.getItem('so_rfqs') || '[]');
+        all.forEach(r=>{
+          const card = document.createElement('div'); card.className='card';
+          card.innerHTML = `<div style="font-weight:700">${esc(r.title)}</div><div>${esc(r.desc)}</div><div class="small muted">${new Date(r.ts || Date.now()).toLocaleString()}</div>`;
+          rfqList.appendChild(card);
+        });
+      }
+    }catch(e){ console.warn('seedRFQs error', e && e.message); }
+  })();
+
+  // ---- 7) Load Education & Books samples if #eduGrid empty ----
+  (function seedEducation(){
+    const grid = safeGet('eduGrid');
+    if(!grid) return;
+    if(grid.children.length > 0) return; // already has items
+    const edu = [
+      {title:"Intro to AI", cat:"Course", img:"https://picsum.photos/seed/ai101/320/200"},
+      {title:"Advanced Data Science", cat:"Course", img:"https://picsum.photos/seed/ds202/320/200"},
+      {title:"Export Business Guide", cat:"Guide", img:"https://picsum.photos/seed/export/320/200"},
+      {title:"E-Learning: Marketing", cat:"Course", img:"https://picsum.photos/seed/marketing/320/200"},
+      {title:"Physics Workbook", cat:"Book", img:"https://picsum.photos/seed/physics/320/200"},
+      {title:"Mathematics Series", cat:"Book", img:"https://picsum.photos/seed/math/320/200"},
+      {title:"Cooking Basics", cat:"Guide", img:"https://picsum.photos/seed/cooking/320/200"},
+      {title:"Language Learning", cat:"Course", img:"https://picsum.photos/seed/lang/320/200"},
+      {title:"IB Biology Notes", cat:"Book", img:"https://picsum.photos/seed/biology/320/200"},
+      {title:"Web Dev Bootcamp", cat:"Course", img:"https://picsum.photos/seed/web/320/200"},
+      {title:"Fashion Design Guide", cat:"Guide", img:"https://picsum.photos/seed/fashion/320/200"},
+      {title:"Leadership Training", cat:"Course", img:"https://picsum.photos/seed/lead/320/200"},
+      {title:"Finance for Beginners", cat:"Book", img:"https://picsum.photos/seed/finance/320/200"},
+      {title:"IELTS Prep", cat:"Book", img:"https://picsum.photos/seed/ielts/320/200"},
+      {title:"Digital Marketing eBook", cat:"Guide", img:"https://picsum.photos/seed/dm/320/200"},
+      {title:"Supply Chain Mgmt", cat:"Course", img:"https://picsum.photos/seed/sc/320/200"},
+      {title:"Chemistry Experiments", cat:"Book", img:"https://picsum.photos/seed/chem/320/200"},
+      {title:"Entrepreneurship Basics", cat:"Guide", img:"https://picsum.photos/seed/ent/320/200"},
+      {title:"Photography for Business", cat:"Course", img:"https://picsum.photos/seed/photo/320/200"},
+      {title:"Product Sourcing Manual", cat:"Guide", img:"https://picsum.photos/seed/sourcing/320/200"}
+    ];
+    edu.forEach(it=>{
+      const card = document.createElement('div'); card.className='card';
+      card.innerHTML = `<div class="thumb"><img src="${it.img}" alt="${esc(it.title)}"></div><div class="title">${esc(it.title)}</div><div class="meta">${esc(it.cat)}</div>`;
+      grid.appendChild(card);
+    });
+  })();
+
+  // ---- 8) Auth enforcement before Post Ad / Start Sourcing (demo + Firebase-aware) ----
+  (function authEnforce(){
+    const postBtn = safeGet('btnPostAdTop') || safeGet('postAdBtn') || document.querySelector('button[data-i18n="postAd"], button[title*="Post Ad"]');
+    const startBtn = safeGet('startSourcingBtn') || safeGet('btnStartSourcingHero') || document.querySelector('button[data-i18n="sourcing"], button[title*="Start Sourcing"]');
+    async function ensureLoggedThenOpen(actionIfLogged){
+      // if Firebase auth object exists, prefer it
+      const fb = window.__FB && window.__FB.auth;
+      let user = null;
+      try{
+        if(fb && window.__FB && window.__FB.auth && window.__FB.auth.currentUser) user = window.__FB.auth.currentUser;
+      }catch(e){}
+      if(!user){
+        // try demo localStorage
+        user = JSON.parse(localStorage.getItem('so_demo_user') || 'null');
+      }
+      if(!user){
+        // show auth modal and stop
+        const am = safeGet('authModal') || safeGet('loginModal');
+        if(am) openModal(am.id || 'authModal');
+        else alert('Please login or create an account to continue.');
+        return;
+      }
+      // user exists: call action
+      actionIfLogged(user);
+    }
+    if(postBtn){
+      postBtn.addEventListener('click', (e)=>{ e.preventDefault(); ensureLoggedThenOpen((user)=>{ const modal = safeGet('postAdModal'); if(modal) openModal(modal.id); else alert('Post Ad modal not found'); }); });
+    }
+    if(startBtn){
+      startBtn.addEventListener('click', (e)=>{ e.preventDefault(); ensureLoggedThenOpen((user)=>{ const modal = safeGet('dashboardModal') || safeGet('postAdModal'); if(modal) openModal(modal.id); else alert('Start sourcing: open dashboard'); }); });
+    }
+  })();
+
+  // ---- 9) Footer Terms & Privacy anchors hook to your modals if present ----
+  (function hookFooter(){
+    const t = document.getElementById('openTerms') || document.getElementById('openTermsFooter') || document.querySelector('a[href*="#terms"], a#openTermsFooter');
+    const p = document.getElementById('openPrivacy') || document.getElementById('openPrivacyFooter') || document.querySelector('a[href*="#privacy"], a#openPrivacyFooter');
+    if(t) t.addEventListener('click', (ev)=>{ ev.preventDefault(); const m = safeGet('termsModal'); if(m) openModal('termsModal'); });
+    if(p) p.addEventListener('click', (ev)=>{ ev.preventDefault(); const m = safeGet('privacyModal'); if(m) openModal('privacyModal'); });
+  })();
+
+  // ---- 10) Extra: keep products' currency labels consistent if render function uses currencySelect value ----
+  // If your product rendering function uses 'currencySelect' or global renderGrid, we already call renderGrid on currency change above.
+
+  // ---- 11) Small UX: when language or currency is changed, keep search/filter applied without extra clicks ----
+  (function autoRefreshOnPrefChange(){
+    const langNode = safeGet('globalLangSel') || safeGet('langSelect') || safeGet('langSel');
+    if(langNode) langNode.addEventListener('change', ()=>{ applyTranslations(langNode.value); /* re-run filters if present */ const apply = safeGet('applyFilters'); if(apply) apply.click(); });
+    const curNode = safeGet('currencySelect');
+    if(curNode) curNode.addEventListener('change', ()=>{ if(typeof window.renderGrid === 'function') window.renderGrid(window.__SO_PRODUCTS || []); });
+  })();
+
+  // ---- 12) Finally, small safety check logs ----
+  setTimeout(()=>{ console.info('Patch: runtime add-ons loaded — multi-lang, geo, lens search, RFQs, education samples, auth enforcement.'); }, 400);
+
+})();
+</script>
+<!-- ===== end of patch ===== -->
+<!-- ===== PATCH: search + subcategory filtering + recommended + small UI tweaks + RFQ images ===== -->
+<script>
+(function(){
+  // small helpers
+  function $id(id){ return document.getElementById(id); }
+  function qs(sel, root=document){ return root.querySelector(sel); }
+  function qsa(sel, root=document){ return Array.from((root||document).querySelectorAll(sel)); }
+  function esc(s){ return s ? String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') : ''; }
+  function daysAgo(ts){ return Math.floor((Date.now() - (ts||0)) / (24*60*60*1000)); }
+
+  // --- 1) Small CSS tweaks: reduce selector sizes (currency & language)
+  (function injectCSS(){
+    const css = `
+      #currencySelect, #globalLangSel, #langSelect, select.select { padding:6px 8px !important; font-size:13px !important; height:34px !important; }
+      .searchbar .select { height:34px !important; }
+      #photoSearchBtn{ margin-left:6px; padding:6px 8px; font-size:14px; }
+      /* smaller badges in card titles */
+      .__patch-new{ font-size:11px; padding:3px 6px; margin-left:6px; }
+      /* RFQ image style */
+      .rfq-img{ width:100%; height:120px; object-fit:cover; border-radius:6px; margin-bottom:6px; }
+      /* recommended product cards inside modal */
+      .patch-reco-list{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+      .patch-reco-item{ width:140px; background:#fff; border-radius:8px; padding:8px; border:1px solid #eee; text-align:center; }
+      .patch-reco-item img{ width:100%; height:90px; object-fit:cover; border-radius:6px; }
+    `;
+    const s = document.createElement('style'); s.type='text/css'; s.appendChild(document.createTextNode(css));
+    document.head.appendChild(s);
+  })();
+
+  // --- 2) Ensure we have categorySelect and add a subcategorySelect next to it (if not present)
+  (function ensureSubcategorySelect(){
+    const cat = $id('categorySelect');
+    if(!cat) return;
+    // if there's already a subcategory select in your markup, honor it (id: subcategorySelect)
+    if($id('subcategorySelect')) return;
+    // create subcategory select
+    const sub = document.createElement('select');
+    sub.id = 'subcategorySelect';
+    sub.className = 'select';
+    sub.title = 'Subcategory';
+    sub.style.marginLeft = '6px';
+    sub.innerHTML = '<option value="">All Subcategories</option>';
+    // place it after category select
+    cat.parentNode.insertBefore(sub, cat.nextSibling);
+
+    // populate function: uses window.FULL_CATEGORIES if available, else derive from products
+    function populateSubsForCategory(category){
+      sub.innerHTML = '<option value="">All Subcategories</option>';
+      let subs = [];
+      try{
+        if(window.FULL_CATEGORIES && window.FULL_CATEGORIES[category]) subs = window.FULL_CATEGORIES[category];
+        else {
+          // derive subcategories from products
+          const set = new Set();
+          (window.__SO_PRODUCTS || []).forEach(p=>{ if(p.category === category && p.subcategory) set.add(p.subcategory); });
+          subs = Array.from(set);
+        }
+      }catch(e){ subs = []; }
+      subs.forEach(sv => {
+        const o = document.createElement('option'); o.value = sv; o.textContent = sv;
+        sub.appendChild(o);
+      });
+    }
+
+    // when category changes, populate subcategory and filter
+    cat.addEventListener('change', (e)=>{
+      const c = cat.value;
+      if(c) populateSubsForCategory(c);
+      else {
+        sub.innerHTML = '<option value="">All Subcategories</option>';
+      }
+      // auto-run filter
+      runFilters();
+    });
+
+    // when subcategory changes, filter
+    sub.addEventListener('change', runFilters);
+  })();
+
+  // --- 3) Filter logic used by search button, enter key, category & subcategory changes ---
+  function runFilters(){
+    const products = (window.__SO_PRODUCTS || []).slice();
+    const q = ($id('searchInput') && $id('searchInput').value || '').trim().toLowerCase();
+    const cat = ($id('categorySelect') && $id('categorySelect').value) || '';
+    const sub = ($id('subcategorySelect') && $id('subcategorySelect').value) || '';
+    const country = ($id('filterCountry') && $id('filterCountry').value) || '';
+    const verifiedOnly = ($id('filterVerified') && $id('filterVerified').value === '1');
+    const min = Number(($id('minPrice') && $id('minPrice').value) || 0);
+    const max = Number(($id('maxPrice') && $id('maxPrice').value) || 0) || Infinity;
+
+    const out = products.filter(p=>{
+      // category / subcategory exact matches
+      if(cat && p.category !== cat) return false;
+      if(sub && p.subcategory !== sub) return false;
+      // fulltext q match across title, seller, company, subcategory
+      if(q){
+        const hay = ((p.title||'') + ' ' + (p.seller||'') + ' ' + (p.company||'') + ' ' + (p.subcategory||'') + ' ' + (p.category||'')).toLowerCase();
+        if(!hay.includes(q)) return false;
+      }
+      // country filter (if contact.address includes country code/name)
+      if(country){
+        const addr = (p.contact && (p.contact.address||'') || '').toLowerCase();
+        if(!addr.includes(country.toLowerCase()) && !(p.country || '').toLowerCase().includes(country.toLowerCase())) return false;
+      }
+      if(verifiedOnly && !p.verified) return false;
+      if(p.price < min || p.price > max) return false;
+      return true;
+    });
+
+    // If your site provides renderGrid function: use it. Otherwise, fallback rendering
+    if(typeof window.renderGrid === 'function'){
+      window.renderGrid(out);
+      // ensure NEW badges re-apply
+      setTimeout(()=>{ if(typeof window.__applyPatchNew === 'function') window.__applyPatchNew(); }, 250);
+    } else {
+      // fallback simple render: replace #productGrid innerHTML
+      const grid = $id('productGrid');
+      if(!grid) return;
+      grid.innerHTML = '';
+      out.forEach(p=>{
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.id = p.id || '';
+        card.innerHTML = `<div class="thumb"><img src="${esc(p.image||('https://picsum.photos/seed/'+encodeURIComponent(p.title)+"/640/480"))}" alt="${esc(p.title)}"></div>
+          <div class="title">${esc(p.title)}</div>
+          <div class="meta">${esc(p.company||p.seller||'')}</div>
+          <div class="price">${(p.currency||'USD')} ${Number(p.price||0).toFixed(2)}</div>
+          <div style="margin-top:6px;display:flex;gap:6px"><button class="btn viewBtn" data-id="${p.id}">View</button><button class="btn contactBtn" data-id="${p.id}">Contact</button></div>`;
+        grid.appendChild(card);
+      });
+      // bind view buttons to open modal (below)
+      attachProductClickHandlers();
+    }
+  }
+
+  // wire search button + enter key
+  (function wireSearchBtn(){
+    const sb = $id('searchBtn') || qs('button#searchBtn');
+    if(sb) sb.addEventListener('click', runFilters);
+    const sin = $id('searchInput');
+    if(sin) sin.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); runFilters(); } });
+    // also wire applyFilters button if present to call runFilters (ensure behavior consistent)
+    const applyBtn = $id('applyFilters');
+    if(applyBtn) applyBtn.addEventListener('click', runFilters);
+  })();
+
+  // --- 4) When products are rendered, attach click handlers to view/contact and add recommended in modal ---
+  function attachProductClickHandlers(){
+    // find all view/contact buttons that may have data-id
+    qsa('.viewBtn, .product-view, button[data-view], button[data-id]').forEach(btn=>{
+      if(btn.__patched) return; btn.__patched = true;
+      btn.addEventListener('click', (ev)=>{
+        const id = btn.dataset.id || btn.getAttribute('data-id') || btn.getAttribute('data-view');
+        if(!id){ 
+          // try to find card parent with data-id
+          let c = btn.closest('[data-id]');
+          if(c) id = c.dataset.id;
+        }
+        if(id){
+          // if existing global openProduct/openProductModal exists, call it first
+          if(typeof window.openProduct === 'function'){ try{ window.openProduct(id); } catch(e){ showProductModal(id); } }
+          else if(typeof window.openProductModal === 'function'){ try{ window.openProductModal(id); } catch(e){ showProductModal(id); } }
+          else showProductModal(id);
+        }
+      });
+    });
+    // contact buttons
+    qsa('.contactBtn, .contactSellerBtn').forEach(btn=>{
+      if(btn.__patchedContact) return; btn.__patchedContact = true;
+      btn.addEventListener('click', (ev)=>{
+        const id = btn.dataset.id || btn.getAttribute('data-id');
+        if(id){
+          // open product modal to show contact area
+          if(typeof window.openProduct === 'function'){ try{ window.openProduct(id); } catch(e){ showProductModal(id); } }
+          else showProductModal(id);
+        }
+      });
+    });
+  }
+
+  // helper to create recommended block and inject into existing modal content
+  function injectRecommendedIntoModal(product){
+    const modal = $id('productModal') || qs('.modal#productModal') || qs('.modal[data-type="product"]') || null;
+    const panel = modal ? modal.querySelector('.panel, #modalContent, .modal-content') : null;
+    if(!panel) return;
+    // avoid duplicate
+    if(panel.querySelector('.patch-reco-list')) return;
+    // find recommended: same subcategory -> same category -> random
+    let recs = (window.__SO_PRODUCTS || []).filter(p=> p.id !== product.id && p.subcategory && product.subcategory && p.subcategory === product.subcategory);
+    if(recs.length < 4) recs = recs.concat((window.__SO_PRODUCTS || []).filter(p=> p.id !== product.id && p.category === product.category).slice(0, 6 - recs.length));
+    if(recs.length < 4) recs = recs.concat((window.__SO_PRODUCTS || []).filter(p=> p.id !== product.id).slice(0, 4 - recs.length));
+    if(recs.length === 0) return;
+    const wrap = document.createElement('div'); wrap.className = 'patch-reco-list';
+    recs.slice(0,6).forEach(r=>{
+      const item = document.createElement('div'); item.className = 'patch-reco-item';
+      item.innerHTML = `<img src="${esc(r.image || ('https://picsum.photos/seed/'+encodeURIComponent(r.title)+'/320/200'))}" alt="${esc(r.title)}" />
+        <div style="font-weight:600;margin-top:6px">${esc(r.title)}</div>
+        <div class="small muted">${esc(r.company||r.seller||'')}</div>
+        <div style="margin-top:6px"><button class="btn" data-id="${r.id}">View</button></div>`;
+      // clicking the view inside recommended should open that product
+      item.querySelector('button')?.addEventListener('click', ()=>{
+        if(typeof window.openProduct === 'function') window.openProduct(r.id);
+        else showProductModal(r.id);
+      });
+      wrap.appendChild(item);
+    });
+    // append to panel near bottom
+    const heading = document.createElement('h4'); heading.textContent = 'Recommended for you';
+    panel.appendChild(heading);
+    panel.appendChild(wrap);
+  }
+
+  // show product modal if no existing function (non-destructive)
+  function showProductModal(id){
+    const product = (window.__SO_PRODUCTS || []).find(p=> p.id == id);
+    if(!product){
+      alert('Product not found: ' + id); return;
+    }
+    // if your site has productModal and modal content, reuse
+    const modal = $id('productModal');
+    const content = (modal && ($id('modalContent') || modal.querySelector('.panel') || modal.querySelector('.modal-content'))) || null;
+    if(content){
+      // try to preserve existing layout: append our info into content
+      // Clear or reuse existing content? We will append recommended after existing content opens.
+      // If product details are not present, create a basic detail block
+      if(!content.querySelector(`[data-pid="${id}"]`)){
+        const block = document.createElement('div'); block.setAttribute('data-pid', id);
+        block.innerHTML = `
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:260px"><img src="${esc(product.image||('https://picsum.photos/seed/'+encodeURIComponent(product.title)+"/640/480"))}" style="width:100%;border-radius:8px" /></div>
+            <div style="flex:1;min-width:260px">
+              <h2>${esc(product.title)}</h2>
+              <div class="price">${esc(product.currency||'USD')} ${(product.price||0).toFixed(2)}</div>
+              <div class="meta">${esc(product.company||product.seller||'')}</div>
+              <div style="margin-top:8px"><button class="btn btn-primary" id="patchOpenRFQBtn">Request Quote</button></div>
+              <div style="margin-top:6px"><strong>Contact:</strong> ${esc((product.contact && (product.contact.email||product.contact.phone)) || 'N/A')}</div>
+            </div>
+          </div>
+          <div style="margin-top:10px"><strong>Description</strong><p class="muted">${esc(product.description || product.desc || '')}</p></div>
+        `;
+        content.innerHTML = ''; // replace for clarity to show details
+        content.appendChild(block);
+      }
+      // open modal if function exists or by class
+      if(typeof window.openModal === 'function'){ try{ window.openModal('productModal'); } catch(e){ modal.classList.add('active'); } }
+      else modal.classList.add('active');
+      // inject recommended (after tiny delay to let any other code fill content)
+      setTimeout(()=> injectRecommendedIntoModal(product), 220);
+      // wire RFQ button if present
+      const rfqBtn = content.querySelector('#patchOpenRFQBtn');
+      if(rfqBtn){
+        rfqBtn.addEventListener('click', ()=> {
+          if($id('rfqModal')) openModal('rfqModal');
+          else alert('RFQ dialog not present.');
+        });
+      }
+    } else {
+      // if there's no modal structure, fallback to alert
+      alert(product.title + '\\nPrice: ' + (product.currency||'USD') + ' ' + (product.price||0));
+    }
+  }
+
+  // attach to product area after any render
+  function attachProductHandlersDelayed(){
+    setTimeout(()=> {
+      attachProductClickHandlers();
+    }, 300);
+  }
+  // run initially
+  attachProductHandlersDelayed();
+  // and whenever the productGrid changes (MutationObserver)
+  try{
+    const grid = $id('productGrid');
+    if(grid){
+      const mo = new MutationObserver(()=>{ attachProductHandlersDelayed(); });
+      mo.observe(grid, { childList:true, subtree:true });
+    }
+  }catch(e){ /* ignore */ }
+
+  // --- 5) Add images to RFQ cards if they don't have one (augment existing RFQ list) ---
+  (function augmentRFQImages(){
+    const rfqList = $id('rfqList');
+    if(!rfqList) return;
+    // add image to each card that lacks an img
+    qsa('#rfqList .card').forEach((card, idx) => {
+      if(card.querySelector('img')) return;
+      const titleEl = card.querySelector('div') || card;
+      const text = (titleEl.textContent || '').trim() || ('rfq-'+idx);
+      const seed = encodeURIComponent(text.split(' ').slice(0,3).join('-')) || ('rfq-'+idx);
+      const img = document.createElement('img');
+      img.className = 'rfq-img';
+      img.src = 'https://picsum.photos/seed/' + seed + '/600/400';
+      // insert at top
+      card.insertBefore(img, card.firstChild);
+    });
+  })();
+
+  // --- 6) Add a small "Reset Subcategory" helper: if user changes category to empty, set subcategory to All and re-run filters ---
+  (function resetSubOnCategoryClear(){
+    const cat = $id('categorySelect'), sub = $id('subcategorySelect');
+    if(!cat || !sub) return;
+    cat.addEventListener('change', ()=> { if(!cat.value) sub.value = ''; } );
+  })();
+
+  // --- 7) Expose the runFilters function so other parts of your app can call it --- 
+  window.__patch_runFilters = runFilters;
+  // if other code calls applyFilters, keep compatibility by hooking applyFilters button to runFilters
+  const applyBtn = $id('applyFilters');
+  if(applyBtn) { applyBtn.addEventListener('click', runFilters); }
+
+  // --- 8) Auto-run initial filters to show correct view if a category/subcategory already selected ---
+  setTimeout(()=> {
+    // if categorySelect exists and has a selected value, populate subcategories
+    const cat = $id('categorySelect'), sub = $id('subcategorySelect');
+    if(cat && cat.value && typeof cat.onchange === 'function') cat.onchange();
+    // run filters on load to respect preselected filters
+    runFilters();
+    // patch RFQ images again after RFQs possibly updated later by your code
+    setTimeout(()=> { try{ augmentRFQImages(); }catch(e){} }, 600);
+  }, 500);
+
+  // --- 9) Small console message ---
+  console.info('Patch applied: search button active, subcategory filter enabled, recommended injection, RFQ images added, smaller selectors.');
+})();
+</script>
+<!-- ===== end patch ===== -->
+<script>
+(function(){
+  function $id(id){ return document.getElementById(id); }
+  function esc(s){ return s?String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])):''; }
+
+  // --- GLOBAL PAGINATION VARS ---
+  let currentPage = 1;
+  const pageSize = 12; // products per page
+
+  // --- RENDER PRODUCTS WITH PAGINATION ---
+  function renderPagedProducts(products){
+    const grid = $id('productGrid');
+    if(!grid) return;
+    grid.innerHTML = '';
+
+    // calculate slice
+    const totalPages = Math.ceil(products.length / pageSize) || 1;
+    if(currentPage > totalPages) currentPage = totalPages;
+    const start = (currentPage-1) * pageSize;
+    const end = start + pageSize;
+    const slice = products.slice(start,end);
+
+    // render
+    slice.forEach(p=>{
+      const card = document.createElement('div');
+      card.className='card'; card.dataset.id=p.id;
+      card.innerHTML = `
+        <div class="thumb"><img src="${esc(p.image)}" alt="${esc(p.title)}"></div>
+        <div class="title">${esc(p.title)}</div>
+        <div class="price">${esc(p.currency||'USD')} ${p.price}</div>
+        <div><button class="btn viewBtn" data-id="${p.id}">View</button>
+        <button class="btn contactBtn" data-id="${p.id}">Contact</button></div>`;
+      grid.appendChild(card);
+    });
+
+    // add pagination controls
+    const pag = document.createElement('div');
+    pag.style.margin="20px 0"; pag.style.textAlign="center";
+    pag.innerHTML = `
+      <button class="btn" id="prevPageBtn" ${currentPage===1?'disabled':''}>&laquo; Previous</button>
+      <span style="margin:0 12px">Page ${currentPage} of ${totalPages}</span>
+      <button class="btn" id="nextPageBtn" ${currentPage===totalPages?'disabled':''}>Next &raquo;</button>
+    `;
+    grid.appendChild(pag);
+
+    $id('prevPageBtn')?.addEventListener('click',()=>{ currentPage--; renderPagedProducts(products); });
+    $id('nextPageBtn')?.addEventListener('click',()=>{ currentPage++; renderPagedProducts(products); });
+
+    attachProductEvents(products);
+  }
+
+  // --- ATTACH VIEW/CONTACT EVENTS TO SHOW MODAL ---
+  function attachProductEvents(allProducts){
+    document.querySelectorAll('.viewBtn, .contactBtn').forEach(btn=>{
+      btn.onclick = ()=>{
+        const id = btn.dataset.id;
+        const p = allProducts.find(x=>x.id==id);
+        if(p) openProductModal(p,allProducts);
+      };
+    });
+  }
+
+  // --- ALIBABA-STYLE PRODUCT MODAL ---
+  function openProductModal(p, allProducts){
+    let modal = $id('productDetailModal');
+    if(!modal){
+      modal = document.createElement('div'); modal.id='productDetailModal'; modal.className='modal active';
+      modal.innerHTML = `<div class="panel" style="max-width:900px">
+        <button class="close" id="closeProductModal">&times;</button>
+        <div id="productDetailContent"></div>
+      </div>`;
+      document.body.appendChild(modal);
+      $id('closeProductModal').onclick=()=>{ modal.remove(); };
+    }
+
+    const content = $id('productDetailContent');
+    content.innerHTML=`
+      <h2>${esc(p.title)}</h2>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div style="flex:1"><img src="${esc(p.image)}" style="width:100%;border-radius:8px"></div>
+        <div style="flex:1">
+          <p><strong>Price:</strong> ${p.currency||'USD'} ${p.price}</p>
+          <p><strong>MOQ:</strong> ${p.moq||'N/A'}</p>
+          <p><strong>Company:</strong> ${esc(p.company||'N/A')}</p>
+          <p><strong>Contact:</strong> ${esc((p.contact && p.contact.email)||'N/A')} | ${esc((p.contact && p.contact.phone)||'')}</p>
+          <p><strong>Location:</strong> ${esc((p.contact && p.contact.address)||'')}</p>
+          <p><strong>Delivery:</strong> ${p.delivery||'As per agreement'}</p>
+        </div>
+      </div>
+      <div style="margin-top:12px"><strong>Description:</strong><br>${esc(p.description||'No description')}</div>
+      <h3 style="margin-top:20px">Recommended Products</h3>
+      <div id="recoProducts" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+    `;
+
+    // recommended = same subcategory
+    const recos = allProducts.filter(x=>x.id!=p.id && x.subcategory===p.subcategory).slice(0,4);
+    const recDiv = $id('recoProducts');
+    recos.forEach(r=>{
+      const el=document.createElement('div'); el.style.width="160px";
+      el.innerHTML=`<img src="${esc(r.image)}" style="width:100%;border-radius:6px">
+        <div style="font-weight:600">${esc(r.title)}</div>
+        <button class="btn small" data-id="${r.id}">View</button>`;
+      el.querySelector('button').onclick=()=>openProductModal(r,allProducts);
+      recDiv.appendChild(el);
+    });
+  }
+
+  // --- HOOK CATEGORY/SUBCATEGORY CLICK (sidebar) ---
+  document.querySelectorAll('.sidebar a[data-cat], .sidebar a[data-subcat]').forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      const cat = link.dataset.cat||'';
+      const sub = link.dataset.subcat||'';
+      let products = (window.__SO_PRODUCTS||[]).filter(p=>{
+        if(cat && p.category!==cat) return false;
+        if(sub && p.subcategory!==sub) return false;
+        return true;
+      });
+      currentPage=1;
+      renderPagedProducts(products);
+    });
+  });
+
+  // --- INIT: show all products with pagination ---
+  const all = window.__SO_PRODUCTS||[];
+  renderPagedProducts(all);
+
+  // expose for other code
+  window.renderPagedProducts = renderPagedProducts;
+})();
+</script>
+<button class="btn" data-i18n="postAd"></button>
+<button class="btn" data-i18n="sourcing"></button>
+<span data-i18n="browse"></span>
+<!-- PATCH: Fix sidebar category links, footer anchors and add recommended list to product modal -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const waitFor = (testFn, cb, timeout = 3000, interval = 80) => {
+    const start = Date.now();
+    const handle = setInterval(() => {
+      try {
+        if (testFn()) { clearInterval(handle); cb(); }
+        else if (Date.now() - start > timeout) { clearInterval(handle); console.warn('waitFor timed out'); cb(); }
+      } catch (e) { clearInterval(handle); console.warn(e); cb(); }
+    }, interval);
+  };
+
+  // 1) Bind category list items (convert them to clickable anchors and wire to doSearch)
+  function bindCategoryItems() {
+    const categoryList = document.getElementById('categoryList');
+    const categorySelect = document.getElementById('categorySelect');
+    const searchInput = document.getElementById('searchInput');
+
+    if (!categoryList) return;
+
+    Array.from(categoryList.querySelectorAll('.cat-item')).forEach(oldEl => {
+      // avoid double binding/replacement
+      if (oldEl.dataset.patched === '1') return;
+      oldEl.dataset.patched = '1';
+
+      // find category name from nearest cat-block title
+      const block = oldEl.closest('.cat-block');
+      let catName = '';
+      if (block) {
+        const firstDiv = block.querySelector(':scope > div');
+        if (firstDiv) catName = firstDiv.textContent.trim();
+      }
+
+      // get subcategory label (strip bullet chars)
+      const subLabel = (oldEl.textContent || '').replace(/^[•\-\s]+/, '').trim();
+
+      // create accessible anchor
+      const a = document.createElement('a');
+      a.className = 'cat-item-link';
+      a.href = `#cat-${encodeURIComponent(catName)}-sub-${encodeURIComponent(subLabel)}`;
+      a.setAttribute('role', 'link');
+      a.style.display = 'block';
+      a.style.color = 'inherit';
+      a.style.textDecoration = 'none';
+      a.innerHTML = oldEl.innerHTML;
+
+      // click handler
+      a.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        try {
+          if (categorySelect) categorySelect.value = catName;
+          if (searchInput) searchInput.value = subLabel;
+          // update fragment without scrolling
+          try { history.replaceState(null, '', a.getAttribute('href')); } catch (e) { /* ignore */ }
+          if (typeof window.doSearch === 'function') {
+            window.doSearch();
+          } else {
+            // fallback: try clicking main search button if present
+            const sb = document.getElementById('searchBtn');
+            if (sb) sb.click();
+          }
+        } catch (e) {
+          console.warn('Category click handler error', e);
+        }
+      });
+
+      // keyboard accessibility
+      a.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); a.click(); } });
+
+      oldEl.parentNode.replaceChild(a, oldEl);
+    });
+  }
+
+  // 2) Ensure category <select> triggers search and clears sub-search by default
+  function bindCategorySelect() {
+    const categorySelect = document.getElementById('categorySelect');
+    const searchInput = document.getElementById('searchInput');
+    if (!categorySelect) return;
+    categorySelect.addEventListener('change', () => {
+      // When user changes category by dropdown, clear free-text subcategory search (keeps UX consistent)
+      if (searchInput) searchInput.value = '';
+      if (typeof window.doSearch === 'function') window.doSearch();
+      else {
+        const sb = document.getElementById('searchBtn');
+        if (sb) sb.click();
+      }
+    });
+  }
+
+  // 3) Re-bind footer anchor links (smooth scroll)
+  function bindFooterAnchors() {
+    document.querySelectorAll('.footer-link').forEach(a => {
+      if (a.dataset.patchedAnchor === '1') return;
+      a.dataset.patchedAnchor = '1';
+      a.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        const href = a.getAttribute('href') || '#';
+        const id = href.replace('#', '') || 'siteFooter';
+        const el = document.getElementById(id) || document.getElementById('siteFooter');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  }
+
+  // 4) When a product modal opens, append a "Recommended products" block (same subcategory)
+  function patchOpenProductModal() {
+    // If openProductModal is not defined yet, wait a short time
+    if (typeof window.openProductModal !== 'function') {
+      // there is a chance the file defines it later — don't break; return (waitFor below will run again)
+      return;
+    }
+    // store original if not already stored
+    if (!window.__origOpenProductModal) window.__origOpenProductModal = window.openProductModal;
+
+    // override with wrapper which calls original then appends recommended block
+    window.openProductModal = function (product) {
+      // call existing logic (this will fill #modalContent)
+      try { window.__origOpenProductModal(product); } catch (e) { console.warn('error calling original openProductModal', e); }
+
+      // append recommended items after a short delay (gives original modal content time to render)
+      setTimeout(() => {
+        try {
+          const modalContent = document.getElementById('modalContent');
+          if (!modalContent) return;
+
+          // remove old recommended list if present
+          const oldRec = modalContent.querySelector('.recommended-list-wrapper');
+          if (oldRec) oldRec.remove();
+
+          const recWrapper = document.createElement('div');
+          recWrapper.className = 'recommended-list-wrapper';
+          recWrapper.style.marginTop = '14px';
+
+          const recTitle = document.createElement('h4');
+          recTitle.textContent = 'Recommended products';
+          recTitle.style.margin = '8px 0';
+          recWrapper.appendChild(recTitle);
+
+          const recList = document.createElement('div');
+          recList.className = 'recommended-list';
+          recList.style.display = 'flex';
+          recList.style.gap = '8px';
+          recList.style.flexWrap = 'wrap';
+
+          const all = (window.__SO_PRODUCTS || window.__SO_PRODUCTS) || [];
+          const sameSub = all.filter(p => p.subcategory === product.subcategory && p.id !== product.id).slice(0, 6);
+
+          if (sameSub.length === 0) {
+            // fallback: pick any other products
+            const fallback = all.filter(p => p.id !== product.id).slice(0, 6);
+            fallback.forEach(r => {
+              const item = createRecItem(r);
+              recList.appendChild(item);
+            });
+          } else {
+            sameSub.forEach(r => recList.appendChild(createRecItem(r)));
+          }
+
+          function createRecItem(r) {
+            const item = document.createElement('div');
+            item.className = 'recommended-item';
+            item.style.width = '140px';
+            item.style.background = 'var(--card-bg, #fff)';
+            item.style.border = '1px solid #eee';
+            item.style.borderRadius = '8px';
+            item.style.padding = '8px';
+            item.innerHTML = `
+              <img src="${r.image || ''}" alt="${(r.title||'')}" style="width:100%;height:80px;object-fit:cover;border-radius:6px">
+              <div style="font-weight:700;margin-top:6px;font-size:13px;line-height:1.1">${r.title}</div>
+              <div class="small muted" style="font-size:12px">${r.company || r.seller || ''}</div>
+              <div style="margin-top:6px"><button class="btn recViewBtn" data-id="${r.id}">View</button></div>
+            `;
+            return item;
+          }
+
+          recWrapper.appendChild(recList);
+          modalContent.appendChild(recWrapper);
+
+          // attach click handlers for recViewBtn
+          Array.from(modalContent.querySelectorAll('.recViewBtn')).forEach(b => {
+            b.addEventListener('click', (ev) => {
+              const id = ev.currentTarget.dataset.id;
+              const p = (window.__SO_PRODUCTS || []).find(x => x.id === id);
+              if (p) {
+                closeModal('productModal');
+                // slight delay so previous modal fully closes
+                setTimeout(() => { window.openProductModal(p); }, 80);
+              }
+            });
+          });
+
+        } catch (e) { console.warn('error appending recommended list', e); }
+      }, 120);
+    };
+  }
+
+  // 5) Hash route support so you can link to a category+subcategory directly
+  function applyHashFilterOnLoad() {
+    const h = location.hash || '';
+    const m = h.match(/^#cat-(.+)-sub-(.+)$/);
+    if (!m) return;
+    try {
+      const cat = decodeURIComponent(m[1]);
+      const sub = decodeURIComponent(m[2]);
+      const categorySelect = document.getElementById('categorySelect');
+      const searchInput = document.getElementById('searchInput');
+      if (categorySelect) categorySelect.value = cat;
+      if (searchInput) searchInput.value = sub;
+      if (typeof window.doSearch === 'function') window.doSearch();
+      else {
+        const sb = document.getElementById('searchBtn');
+        if (sb) sb.click();
+      }
+    } catch (e) {
+      console.warn('hash filter error', e);
+    }
+  }
+
+  // Wait for doSearch and openProductModal to exist (these are defined elsewhere in your file)
+  waitFor(() => (typeof window.doSearch === 'function'), () => {
+    try {
+      bindCategoryItems();
+      bindCategorySelect();
+      bindFooterAnchors();
+      patchOpenProductModal();
+      applyHashFilterOnLoad();
+      // Also run again after a little time in case parts of page are built later
+      setTimeout(() => { bindCategoryItems(); patchOpenProductModal(); }, 500);
+      console.log('Site patch applied: sidebar categories bound, footer anchors bound, product modal patched.');
+    } catch (e) { console.error('patch error', e); }
+  }, 4000, 80);
+
+});
+</script>
+<!-- ===== SO-GROUP PATCH: Filtering, pagination, product modal, RFQ images, smaller selectors ===== -->
+<script>
+(function(){
+  // ---------- Helpers ----------
+  const $ = id => document.getElementById(id);
+  const qs = sel => document.querySelector(sel);
+  const qsa = sel => Array.from(document.querySelectorAll(sel));
+  const esc = s => s ? String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') : '';
+  const DAYS_NEW = 7;
+  function daysOld(ts){ return Math.floor((Date.now() - (ts||0)) / (24*60*60*1000)); }
+
+  // ---------- Small UI CSS tweaks (smaller currency/lang selects, RFQ images) ----------
+  (function injectSmallCss(){
+    const css = `
+      #currencySelect, #langSelect, #globalLangSel, select.select { padding:6px 8px !important; font-size:13px !important; height:34px !important; }
+      .rfq-img { width:100%; height:120px; object-fit:cover; border-radius:6px; margin-bottom:6px; }
+      .product-modal-gallery img { width:100%; height:auto; border-radius:8px; margin-bottom:6px; }
+      .product-modal { max-width:980px; width:95%; }
+      .product-modal .close-btn { position:absolute; right:12px; top:8px; background:transparent;border:0;font-size:28px;cursor:pointer; }
+      .pagination-controls { display:flex; justify-content:center; gap:12px; margin:18px 0; align-items:center;}
+      .recommended-list { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+      .recommended-item { width:150px; background:var(--card-bg); border-radius:8px; padding:8px; border:1px solid #eee; text-align:center; }
+      .recommended-item img{ width:100%; height:90px; object-fit:cover; border-radius:6px; }
+    `;
+    const s = document.createElement('style'); s.appendChild(document.createTextNode(css)); document.head.appendChild(s);
+  })();
+
+  // ---------- Collect product data ----------
+  // Prefer window.__SO_PRODUCTS if present, else parse #embeddedProducts JSON if present
+  function getProducts(){
+    if(Array.isArray(window.__SO_PRODUCTS) && window.__SO_PRODUCTS.length) return window.__SO_PRODUCTS;
+    const emb = $('embeddedProducts');
+    if(emb){
+      try{ const parsed = JSON.parse(emb.textContent); if(Array.isArray(parsed)) return parsed; } catch(e){}
+    }
+    // fallback: try reading from productGrid cards (very basic)
+    const cards = qsa('#productGrid .card');
+    const arr = cards.map(c=>{
+      return {
+        id: c.dataset.id || c.getAttribute('data-id') || Math.random().toString(36).slice(2),
+        title: c.querySelector('.title')?.textContent?.trim() || c.querySelector('h3')?.textContent?.trim() || 'Product',
+        image: c.querySelector('img')?.src || 'https://picsum.photos/seed/'+Math.random()+'/400/300',
+        price: Number((c.querySelector('.price')?.textContent||'').replace(/[^\d\.]/g,'')) || 0,
+        currency: (c.querySelector('.price')?.textContent||'USD').split(' ')[0] || 'USD',
+        company: c.querySelector('.meta')?.textContent?.trim() || '',
+        category: c.dataset.category || '',
+        subcategory: c.dataset.subcategory || '',
+        createdAt: Number(c.dataset.createdAt) || Date.now()
+      };
+    });
+    window.__SO_PRODUCTS = arr;
+    return arr;
+  }
+
+  // ---------- Render products (paginated) ----------
+  let PAGE = 1;
+  const PAGE_SIZE = 12; // change per need
+
+  function renderProductsList(products){
+    const grid = $('productGrid');
+    if(!grid) return;
+    grid.innerHTML = '';
+    const total = products.length;
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if(PAGE > totalPages) PAGE = totalPages;
+    const start = (PAGE-1)*PAGE_SIZE, end = start + PAGE_SIZE;
+    const pageItems = products.slice(start, end);
+
+    // If site has renderGrid function, let it take precedence for whole list but then we need pagination;
+    // to avoid overwriting their behavior, we check and only use our own DOM if renderGrid not present or when fallback needed.
+    if(typeof window.renderGrid === 'function' && !window.__so_force_custom_render){
+      // try to call user's renderGrid with the page slice
+      try{
+        window.renderGrid(pageItems);
+        applyNewBadges(); // add NEW badges overlay if needed
+        renderPaginationControls(products, totalPages);
+        attachGridButtons(); // ensure view/contact buttons wired
+        return;
+      }catch(e){
+        // fallback to custom rendering below
+      }
+    }
+
+    // Custom rendering: create cards
+    pageItems.forEach(p => {
+      const card = document.createElement('div'); card.className = 'card product-card';
+      card.dataset.id = p.id || '';
+      if(p.createdAt) card.dataset.createdAt = p.createdAt;
+      // ensure image
+      const imgUrl = p.image || ('https://picsum.photos/seed/'+encodeURIComponent(p.title || p.id)+'/400/300');
+      // NEW badge
+      const newBadge = (p.createdAt && daysOld(p.createdAt) <= DAYS_NEW) ? `<span class="level-badge level-new __so-new">NEW</span>` : '';
+      // supplier level
+      const levelBadge = p.level === 'gold' ? '<span class="level-badge level-gold">GOLD</span>' : (p.level === 'verified' ? '<span class="level-badge level-verified">VERIFIED</span>' : '');
+      const titleHtml = `<div style="display:flex;justify-content:space-between;align-items:center"><div class="title">${esc(p.title || '')}</div><div>${newBadge}</div></div>`;
+      const metaHtml = `<div class="meta">${esc(p.company || p.seller || '')} ${levelBadge}</div>`;
+      const priceHtml = `<div class="price">${esc(p.currency||'USD')} ${Number(p.price||0).toFixed(2)}</div>`;
+      card.innerHTML = `<div class="thumb"><img src="${esc(imgUrl)}" alt="${esc(p.title||'')}" loading="lazy"></div>${titleHtml}${metaHtml}${priceHtml}
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button class="btn viewBtn" data-id="${esc(p.id)}">View</button>
+          <button class="btn contactBtn" data-id="${esc(p.id)}">Contact</button>
+          <button class="btn wishlistBtn" data-id="${esc(p.id)}">♡</button>
+        </div>`;
+      grid.appendChild(card);
+    });
+
+    applyNewBadges();
+    renderPaginationControls(products, Math.max(1, Math.ceil(total / PAGE_SIZE)));
+    attachGridButtons();
+  }
+
+  function renderPaginationControls(products, totalPages){
+    // remove existing controls
+    const existing = qs('.pagination-controls'); if(existing) existing.remove();
+    const container = document.createElement('div'); container.className = 'pagination-controls';
+    const prev = document.createElement('button'); prev.className = 'btn'; prev.textContent = '« Previous'; prev.disabled = PAGE <= 1;
+    const info = document.createElement('span'); info.textContent = `Page ${PAGE} of ${totalPages}`;
+    const next = document.createElement('button'); next.className = 'btn'; next.textContent = 'Next »'; next.disabled = PAGE >= totalPages;
+    prev.addEventListener('click', ()=>{ if(PAGE>1) PAGE--; renderProductsList(products); });
+    next.addEventListener('click', ()=>{ if(PAGE<totalPages) PAGE++; renderProductsList(products); });
+    container.appendChild(prev); container.appendChild(info); container.appendChild(next);
+    const grid = $('productGrid'); if(grid) grid.parentNode.insertBefore(container, grid.nextSibling);
+  }
+
+  function applyNewBadges(){
+    // add visual blinking effect is controlled by CSS .level-new already present
+    qsa('.__so-new').forEach(el => {});
+  }
+
+  // ---------- Filtering logic ----------
+  function collectFilters(){
+    const q = ($('searchInput') && $('searchInput').value || '').trim().toLowerCase();
+    const cat = ($('categorySelect') && $('categorySelect').value) || '';
+    const sub = ($('subcategorySelect') && $('subcategorySelect').value) || '';
+    const country = ($('filterCountry') && $('filterCountry').value) || '';
+    const verifiedOnly = ($('filterVerified') && $('filterVerified').value === '1');
+    const min = Number(($('minPrice') && $('minPrice').value) || 0);
+    const max = Number(($('maxPrice') && $('maxPrice').value) || 0) || Infinity;
+    return { q, cat, sub, country, verifiedOnly, min, max };
+  }
+
+  function applyFiltersAndRender(){
+    const products = getProducts();
+    const f = collectFilters();
+    let out = products.filter(p=>{
+      if(f.cat && p.category !== f.cat) return false;
+      if(f.sub && p.subcategory !== f.sub) return false;
+      if(f.q){
+        const hay = ((p.title||'') + ' ' + (p.seller||'') + ' ' + (p.company||'') + ' ' + (p.subcategory||'') + ' ' + (p.category||'')).toLowerCase();
+        if(!hay.includes(f.q)) return false;
+      }
+      if(f.country){
+        const addr = ((p.contact && (p.contact.address||'')) || '').toLowerCase();
+        if(!addr.includes(f.country.toLowerCase()) && !((p.country||'').toLowerCase().includes(f.country.toLowerCase()))) return false;
+      }
+      if(f.verifiedOnly && !p.verified) return false;
+      if(p.price < f.min || p.price > f.max) return false;
+      return true;
+    });
+    PAGE = 1;
+    renderProductsList(out);
+  }
+
+  // ---------- Sidebar category/subcategory wiring ----------
+  function wireSidebarCategories(){
+    const list = $('categoryList');
+    if(!list) return;
+    // look for elements with .cat-item (kept by your file). Convert them to clickable anchors if not already.
+    qsa('#categoryList .cat-item, #categoryList a').forEach(el=>{
+      if(el.dataset.__soPatched) return; el.dataset.__soPatched = '1';
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        // try to infer category & subcategory text from element or data attributes
+        let subLabel = (el.textContent||'').trim();
+        // find parent category title if available
+        let parent = el.closest('.cat-block') || el.parentElement;
+        let catLabel = '';
+        if(parent){
+          const heading = parent.querySelector('h4, h3, .cat-block-title, .title');
+          if(heading) catLabel = (heading.textContent || '').trim();
+          // fallback: look for a previous sibling with class
+          if(!catLabel){
+            const prev = parent.previousElementSibling;
+            if(prev) catLabel = (prev.textContent||'').trim();
+          }
+        }
+        // If categorySelect exists, set it
+        if($('categorySelect') && catLabel) { $('categorySelect').value = catLabel; }
+        // If subcategorySelect exists, ensure populated (many patches already populate). Try to set it by value.
+        if($('subcategorySelect')){
+          const subSel = $('subcategorySelect');
+          // ensure option exists: try to find matching option (case-insensitive)
+          const opt = Array.from(subSel.options).find(o => (o.textContent||'').trim().toLowerCase() === subLabel.toLowerCase());
+          if(opt){ subSel.value = opt.value; }
+          else { /* if not found, set searchInput instead */ if($('searchInput')) $('searchInput').value = subLabel; }
+        } else {
+          if($('searchInput')) $('searchInput').value = subLabel;
+        }
+        // run filters
+        setTimeout(()=> applyFiltersAndRender(), 60);
+      });
+    });
+  }
+
+  // ---------- Attach search + filters to controls ----------
+  function wireSearchControls(){
+    const sb = $('searchBtn');
+    if(sb) sb.addEventListener('click', applyFiltersAndRender);
+    const si = $('searchInput'); if(si) si.addEventListener('keydown', e => { if(e.key === 'Enter') { e.preventDefault(); applyFiltersAndRender(); } });
+    const cat = $('categorySelect'); if(cat) cat.addEventListener('change', () => { // populate subcategories if your code supports it
+      // try to trigger existing populate if any
+      if(typeof window.populateSubsForCategory === 'function') window.populateSubsForCategory(cat.value);
+      applyFiltersAndRender();
+    });
+    const sub = $('subcategorySelect'); if(sub) sub.addEventListener('change', applyFiltersAndRender);
+    const applyBtn = $('applyFilters'); if(applyBtn) applyBtn.addEventListener('click', applyFiltersAndRender);
+    // also watch currency change to re-render prices if renderGrid expects it
+    const cur = $('currencySelect'); if(cur) cur.addEventListener('change', ()=> { applyFiltersAndRender(); });
+  }
+
+  // ---------- RFQ images augmentation ----------
+  function augmentRFQImages(){
+    const rfqList = $('rfqList');
+    if(!rfqList) return;
+    qsa('#rfqList .card').forEach((card, idx) => {
+      if(card.querySelector('img')) return;
+      const firstText = (card.querySelector('div')?.textContent || ('rfq-'+idx)).trim().split(/\n/)[0];
+      const seed = encodeURIComponent(firstText.split(' ').slice(0,3).join('-') || ('rfq'+idx));
+      const img = document.createElement('img'); img.src = 'https://picsum.photos/seed/' + seed + '/600/400'; img.className = 'rfq-img';
+      card.insertBefore(img, card.firstChild);
+    });
+  }
+
+  // ---------- Product modal: reuse existing productModal if present, else create one ----------
+  function openDetailedProductModal(product){
+    // Look for existing modal: id 'productModal' with child '#modalContent' or '.panel'
+    let modal = $('productModal');
+    let modalContent = modal ? ($('modalContent') || modal.querySelector('.panel') || modal.querySelector('.modal-content')) : null;
+    if(!modal || !modalContent){
+      // create a new modal overlay so we don't break existing modals
+      modal = document.createElement('div'); modal.id = 'so_patch_productModal'; modal.className = 'modal active';
+      modal.innerHTML = `<div class="panel product-modal" role="dialog" aria-modal="true">
+        <button class="close-btn" aria-label="Close" id="so_patch_closeModal">&times;</button>
+        <div id="so_patch_modalContent"></div>
+      </div>`;
+      document.body.appendChild(modal);
+      modalContent = $('so_patch_modalContent');
+      // close handler
+      $('so_patch_closeModal').addEventListener('click', ()=> { modal.classList.remove('active'); modal.remove(); });
+      modal.addEventListener('click', (ev)=>{ if(ev.target === modal){ modal.classList.remove('active'); modal.remove(); } });
+    } else {
+      // if existing, ensure it's visible
+      if(modal.classList) modal.classList.add('active');
+    }
+
+    // Build gallery HTML: if product.images array exists, show thumbnails; else show main image
+    const images = product.images && Array.isArray(product.images) && product.images.length ? product.images : (product.gallery && Array.isArray(product.gallery) ? product.gallery : [product.image || 'https://picsum.photos/seed/'+encodeURIComponent(product.title)+'/640/480']);
+    const imagesHtml = images.map((u,i)=>`<div style="flex:1; min-width:120px; max-width:220px;"><img src="${esc(u)}" alt="${esc(product.title)}" style="width:100%;border-radius:6px"></div>`).join('');
+
+    // Supplier contact block
+    const contact = product.contact || {};
+    const sellerHtml = `
+      <div class="seller-box" style="padding:10px;border-radius:8px;border:1px solid #f0f2f5;margin-top:6px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:84px;height:84px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;border:1px solid #eee">🏢</div>
+          <div style="flex:1">
+            <div style="font-weight:700">${esc(product.company || product.seller || 'Seller')}</div>
+            <div class="small muted">${esc(contact.address || '')}</div>
+            <div style="margin-top:8px"><strong>Phone:</strong> ${esc(contact.phone || 'N/A')}</div>
+            <div><strong>Email:</strong> ${contact.email ? `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>` : 'N/A'}</div>
+            <div style="margin-top:8px"><button class="btn" id="so_patch_contactSellerBtn">Contact Seller</button> <button class="btn" id="so_patch_requestQuoteBtn">Request Quote</button></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Delivery, MOQ, Price
+    const price = `${esc(product.currency || 'USD')} ${Number(product.price || 0).toFixed(2)}`;
+    const moq = product.moq || product.MOQ || 'N/A';
+    const delivery = product.delivery || 'As per agreement';
+
+    modalContent.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">${esc(product.title)}</h2><div>${(product.level?`<span class="level-badge level-${product.level}">${esc(product.level.toUpperCase())}</span>`:'')}</div></div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+        <div style="flex:1;min-width:260px">
+          <div style="border-radius:8px;overflow:hidden;background:#fff;padding:10px">${imagesHtml}</div>
+        </div>
+        <div style="flex:1;min-width:260px">
+          <div style="font-size:1.25rem;font-weight:700">${price}</div>
+          <div style="margin-top:6px"><strong>MOQ:</strong> ${esc(moq)}</div>
+          <div style="margin-top:6px"><strong>Delivery:</strong> ${esc(delivery)}</div>
+          ${sellerHtml}
+        </div>
+      </div>
+      <div style="margin-top:12px"><strong>Description</strong><div class="muted" style="margin-top:6px">${esc(product.description || product.desc || '')}</div></div>
+      <div id="so_patch_recommended" style="margin-top:14px"></div>
+    `;
+
+    // contact buttons
+    const csBtn = $('#so_patch_contactSellerBtn'); if(csBtn) csBtn.addEventListener('click', ()=> {
+      // open RFQ modal or contact modal if present
+      if($('rfqModal')) { openModal('rfqModal'); if($('rfqTitle')) $('rfqTitle').value = product.title; }
+      else alert('Contact Seller: ' + (contact.email || contact.phone || 'No contact'));
+    });
+    const rqBtn = $('#so_patch_requestQuoteBtn'); if(rqBtn) rqBtn.addEventListener('click', ()=> {
+      if($('rfqModal')) openModal('rfqModal'); else alert('RFQ not configured');
+    });
+
+    // build recommended
+    buildRecommendedInsideModal(product);
+  }
+
+  function buildRecommendedInsideModal(product){
+    const wrap = $('so_patch_recommended');
+    if(!wrap) return;
+    wrap.innerHTML = '<h3>Recommended Products</h3><div class="recommended-list" id="so_patch_recoList"></div>';
+    const list = $('#so_patch_recoList');
+    const all = getProducts();
+    let recs = all.filter(p => p.subcategory && product.subcategory && p.subcategory === product.subcategory && p.id !== product.id).slice(0,6);
+    if(recs.length < 4) recs = recs.concat(all.filter(p => p.category === product.category && p.id !== product.id).slice(0, 6 - recs.length));
+    if(recs.length < 4) recs = recs.concat(all.filter(p => p.id !== product.id).slice(0, 4 - recs.length));
+    recs = recs.slice(0,6);
+    recs.forEach(r=>{
+      const div = document.createElement('div'); div.className = 'recommended-item';
+      div.innerHTML = `<img src="${esc(r.image || 'https://picsum.photos/seed/'+encodeURIComponent(r.title)+'/320/200')}" alt="${esc(r.title)}"><div style="font-weight:700;margin-top:6px">${esc(r.title)}</div><div class="small muted">${esc(r.company||r.seller||'')}</div><div style="margin-top:6px"><button class="btn recView" data-id="${esc(r.id)}">View</button></div>`;
+      list.appendChild(div);
+      div.querySelector('.recView')?.addEventListener('click', ()=> {
+        // open the recommended product (replace modal content)
+        openDetailedProductModal(r);
+      });
+    });
+  }
+
+  // ---------- Wire product buttons in grid ----------
+  function attachGridButtons(){
+    qsa('.viewBtn, .product-view').forEach(btn => {
+      if(btn.dataset.__soPatched) return; btn.dataset.__soPatched = '1';
+      btn.addEventListener('click', (ev)=> {
+        ev.preventDefault();
+        const id = btn.dataset.id || btn.getAttribute('data-id');
+        const all = getProducts();
+        const product = all.find(p=>p.id == id) || all[0];
+        // prefer site existing openProductModal if it accepts object or id
+        if(typeof window.openProduct === 'function'){
+          try{ window.openProduct(id); // try calling original
+            // after a small delay, if their modal didn't show recommended, our patch will add if possible
+            setTimeout(()=> { try{ buildRecommendedInsideModal(product); }catch(e){} }, 200);
+            return;
+          }catch(e){}
+        }
+        if(typeof window.openProductModal === 'function'){
+          try{ window.openProductModal(product); setTimeout(()=> buildRecommendedInsideModal(product),200); return; }catch(e){}
+        }
+        openDetailedProductModal(product);
+      });
+    });
+
+    qsa('.contactBtn, .contactSellerBtn').forEach(btn=>{
+      if(btn.dataset.__soContactPatched) return; btn.dataset.__soContactPatched='1';
+      btn.addEventListener('click',(ev)=>{
+        ev.preventDefault();
+        const id = btn.dataset.id || btn.getAttribute('data-id');
+        const all = getProducts(); const product = all.find(p=>p.id==id) || all[0];
+        // open modal and show contact area
+        openDetailedProductModal(product);
+        setTimeout(()=> {
+          // focus the contact button in modal
+          const cbtn = $('#so_patch_contactSellerBtn');
+          if(cbtn) cbtn.focus();
+        }, 180);
+      });
+    });
+
+    qsa('.wishlistBtn').forEach(btn=>{
+      if(btn.dataset.__soWishPatched) return; btn.dataset.__soWishPatched='1';
+      btn.addEventListener('click', (ev)=> {
+        const id = btn.dataset.id;
+        const key = 'so_wishlist';
+        const cur = JSON.parse(localStorage.getItem(key)||'[]');
+        if(!cur.includes(id)) { cur.push(id); localStorage.setItem(key, JSON.stringify(cur)); btn.textContent='♥'; }
+        else { const idx=cur.indexOf(id); cur.splice(idx,1); localStorage.setItem(key, JSON.stringify(cur)); btn.textContent='♡'; }
+      });
+    });
+  }
+
+  // ---------- Public init: wire controls and render initial view ----------
+  function initPatch(){
+    // Hide your Load More button if present (we use pagination)
+    const btnLoadMore = $('btnLoadMore') || $('btnLoadMore') || qs('#btnLoadMore');
+    if(btnLoadMore) btnLoadMore.style.display = 'none';
+
+    // Wire search/buttons
+    wireSearchControls();
+    // Wire sidebar
+    wireSidebarCategories();
+
+    // Augment RFQs
+    augmentRFQImages();
+
+    // Initial render
+    const all = getProducts();
+    renderProductsList(all);
+
+    // Observe productGrid changes and reattach handlers
+    const grid = $('productGrid');
+    if(grid){
+      const mo = new MutationObserver(()=> { attachGridButtons(); augmentRFQImages(); });
+      mo.observe(grid, { childList:true, subtree:true });
+    }
+
+    // If category select has value prepopulated, run filters
+    if($('categorySelect') && $('categorySelect').value) setTimeout(()=> applyFiltersAndRender(), 120);
+  }
+
+  // Run after DOM ready
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPatch);
+  else initPatch();
+
+  // Expose small helpers for debugging
+  window.__so_patch = { renderProductsList, applyFiltersAndRender, openDetailedProductModal };
+
+})();
+</script>
+<!-- ===== end SO-GROUP PATCH ===== -->
+<!-- ===== SO-GROUP: Final polish patch (Product modal, RFQ pagination, Sidebar, i18n apply) ===== -->
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const qsa = sel => Array.from(document.querySelectorAll(sel));
+  const esc = s => s ? String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') : '';
+
+  /* --------------------------
+     1) Ensure language selects auto-apply translations + re-render
+     -------------------------- */
+  function applyI18nAndRerender(lang){
+    try{
+      if(typeof window.applyTranslations === 'function') window.applyTranslations(lang);
+      // store selection
+      try{ localStorage.setItem('so_lang', lang); }catch(e){/*ignore*/}
+
+      // call common filter/render functions if present
+      if(typeof window.applyFiltersAndRender === 'function') window.applyFiltersAndRender();
+      else if(typeof window.runFilters === 'function') window.runFilters();
+      else if(typeof window.renderGrid === 'function') window.renderGrid(window.__SO_PRODUCTS || []);
+      else if(typeof window.renderPagedProducts === 'function') window.renderPagedProducts(window.__SO_PRODUCTS || []);
+      // keep UI in sync
+      qsa('#globalLangSel,#langSelect,#langSel').forEach(n=>{ try{ n.value = lang; }catch(e){} });
+    }catch(err){ console.warn('i18n auto-apply error', err); }
+  }
+
+  // bind all possible selects to immediate apply
+  ['globalLangSel','langSelect','langSel','langSelectHeader'].forEach(id=>{
+    const el = $(id);
+    if(!el) return;
+    el.addEventListener('change', ()=> applyI18nAndRerender(el.value));
+  });
+
+  // if detectLocation was used to set language previously, we re-apply translation + render.
+  (function reapplySavedLang(){
+    const saved = localStorage.getItem('so_lang') || (navigator.language || 'en').substr(0,2);
+    if(saved) setTimeout(()=> applyI18nAndRerender(saved), 120);
+  })();
+
+  /* --------------------------
+     2) Robust Product Modal (Alibaba-style)
+     - If openProductModal exists, we decorate it; else provide openAlibabaModal()
+     - Ensure details, seller info, contact actions, recommended products, and close button
+     -------------------------- */
+  function buildAlibabaModalContent(product){
+    const seller = (window.SELLERS || []).find(s=>s.id === product.sellerId) || product.sellerObj || {};
+    const isNew = (Date.now() - (product.createdAt||0)) <= (7*24*60*60*1000);
+    const priceStr = (product.currency || 'USD') + ' ' + (Number(product.price||0).toFixed(2));
+    const wa = (product.contact && product.contact.whatsapp) ? product.contact.whatsapp.replace(/\D/g,'') : '';
+    return `
+      <div class="product-modal" role="dialog" aria-label="${esc(product.title)}" style="position:relative">
+        <button class="close-btn" title="Close" onclick="closeModal('productModal')">&times;</button>
+        <div style="display:flex;gap:18px;flex-wrap:wrap">
+          <div style="flex:1;min-width:280px">
+            <div class="product-modal-gallery">
+              <img src="${esc(product.image)}" alt="${esc(product.title)}" style="width:100%;border-radius:8px;max-height:420px;object-fit:cover" />
+              <!-- future: add thumbnails/carousel -->
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+              ${ isNew ? '<span class="level-badge level-new">NEW</span>' : '' }
+              <span class="level-badge ${product.level === 'gold' ? 'level-gold' : (product.level === 'verified' ? 'level-verified' : '')}">${product.level? product.level.toUpperCase() : 'SUPPLIER'}</span>
+              <div class="small muted" style="margin-left:6px">${esc(product.seller)}</div>
+            </div>
+            <div style="margin-top:10px">
+              <div class="price" style="font-size:1.3em">${esc(priceStr)}</div>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:300px">
+            <h2 style="margin-top:0">${esc(product.title)}</h2>
+            <div class="small muted">Category: ${esc(product.category)} › ${esc(product.subcategory)}</div>
+            <p style="margin-top:10px">${esc(product.description || product.desc || 'No description provided by seller.')}</p>
+
+            <div style="margin-top:12px">
+              <h4 style="margin:6px 0">Seller Information</h4>
+              <div class="seller-box" style="align-items:flex-start">
+                <div class="logo" aria-hidden="true">🏢</div>
+                <div>
+                  <div style="font-weight:700">${esc(seller.company || product.company || product.seller)}</div>
+                  <div class="small muted">${esc(seller.country || product.country || '')}</div>
+                  <div style="margin-top:8px"><strong>Contact:</strong> ${esc(product.contact && (product.contact.phone||product.contact.email) || 'N/A')}</div>
+                  <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+                    ${product.contact && product.contact.email ? `<button class="btn" onclick="window.location.href='mailto:${esc(product.contact.email)}'">Email Seller</button>` : ''}
+                    ${wa ? `<button class="btn" onclick="window.open('https://wa.me/${wa}','_blank')">WhatsApp</button>` : ''}
+                    <button class="btn btn-primary" id="modalRequestRFQ">Request Quote</button>
+                    <button class="btn" id="modalViewStore">View Store</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px">
+              <strong>Delivery & Terms</strong>
+              <p class="muted">${esc(product.delivery || 'Contact seller for shipping terms (FOB/CIF/DDP) and lead times.')}</p>
+            </div>
+          </div>
+        </div>
+
+        <hr style="margin:14px 0">
+        <div id="modalRecommendedWrap"><h4>Recommended Products</h4><div class="recommended-list" role="list"></div></div>
+      </div>
+    `;
+  }
+
+  // decorate existing openProductModal or provide wrapper
+  if(typeof window.openProductModal === 'function'){
+    const orig = window.openProductModal;
+    window.openProductModal = function(product){
+      try{
+        // if product param is id, find object
+        if(typeof product === 'string' || typeof product === 'number'){
+          const p = (window.__SO_PRODUCTS||[]).find(x => x.id == product);
+          if(p) product = p;
+        }
+        // call original (in case original builds other parts)
+        try{ orig(product); }catch(e){ /* ignore */ }
+
+        // now ensure our richer layout sits in #modalContent or #productModal panel
+        const modal = $('productModal');
+        let container = modal && ( $('modalContent') || modal.querySelector('.panel') || modal.querySelector('.modal-content') );
+        if(!container){
+          // fallback: create modal and inject
+          const m = modal || document.createElement('div');
+          if(!modal){
+            m.id = 'productModal'; m.className = 'modal active';
+            const p = document.createElement('div'); p.className='panel'; m.appendChild(p); document.body.appendChild(m);
+            container = p;
+          } else {
+            modal.classList.add('active');
+            container = $('modalContent') || modal.querySelector('.panel');
+          }
+        }
+        // replace content with Alibaba-style detail
+        container.innerHTML = buildAlibabaModalContent(product);
+
+        // populate recommended
+        const recWrap = container.querySelector('.recommended-list');
+        if(recWrap){
+          const recs = (window.__SO_PRODUCTS||[]).filter(x=> x.subcategory === product.subcategory && x.id !== product.id).slice(0,6);
+          if(recs.length === 0) recs.push(...(window.__SO_PRODUCTS||[]).filter(x=>x.id !== product.id).slice(0,6));
+          recs.forEach(r=>{
+            const item = document.createElement('div'); item.className = 'recommended-item';
+            item.innerHTML = `<img src="${esc(r.image||r.img||('https://picsum.photos/seed/'+encodeURIComponent(r.title)+'/320/200'))}" alt="${esc(r.title)}"><div style="font-weight:700;font-size:13px;margin-top:6px">${esc(r.title)}</div><div class="small muted">${esc(r.company||r.seller||'')}</div><div style="margin-top:6px"><button class="btn recViewBtn" data-id="${r.id}">View</button></div>`;
+            recWrap.appendChild(item);
+          });
+          // attach rec click
+          recWrap.querySelectorAll('.recViewBtn').forEach(b => b.addEventListener('click',(e)=>{
+            const id = e.currentTarget.dataset.id;
+            const p = (window.__SO_PRODUCTS||[]).find(x=>x.id==id);
+            if(p){ closeModal('productModal'); setTimeout(()=> window.openProductModal(p), 90); }
+          }));
+        }
+
+        // wire RFQ and Store buttons
+        container.querySelector('#modalRequestRFQ')?.addEventListener('click', ()=>{
+          // prefill RFQ modal if present
+          try{
+            if($('rfqTitle')) $('rfqTitle').value = `RFQ: ${product.title}`;
+            if($('rfqDesc')) $('rfqDesc').value = `Request quotation for ${product.title}. Quantity: ...`;
+            openModal('rfqModal');
+          }catch(e){ openModal('rfqModal'); }
+        });
+        container.querySelector('#modalViewStore')?.addEventListener('click', ()=> {
+          if(typeof window.openSupplierStorefront === 'function') window.openSupplierStorefront(product.sellerId || product.seller);
+        });
+
+      }catch(err){
+        console.warn('openProductModal patch error', err);
+        try{ orig(product); }catch(e){ /* fallback */ alert(product.title || 'Product'); }
+      }
+    };
+  } // else if not present we don't override global behavior
+
+  /* --------------------------
+     3) RFQ pagination: renderPagedRFQs with Prev/Next + images
+     -------------------------- */
+  function renderPagedRFQs(page = 1, pageSize = 6){
+    const rfqList = $('rfqList');
+    if(!rfqList) return;
+    // prefer stored RFQs or build from localStorage
+    let rfqs = JSON.parse(localStorage.getItem('so_rfqs') || '[]');
+    // If no saved RFQs, try existing DOM cards fallback (keep them)
+    if(!Array.isArray(rfqs) || rfqs.length === 0){
+      // try to parse existing DOM and create list objects
+      const domCards = Array.from(rfqList.querySelectorAll('.card'));
+      if(domCards.length){
+        rfqs = domCards.map((c, i) => {
+          return {
+            id: 'r_' + (i+1),
+            title: (c.querySelector('div')?.textContent||('RFQ '+(i+1))).trim(),
+            desc: (c.querySelector('.meta')?.textContent || '').trim(),
+            ts: Date.now() - (i*1000000)
+          };
+        });
+      }
+    }
+    if(!Array.isArray(rfqs)) rfqs = [];
+
+    const totalPages = Math.max(1, Math.ceil(rfqs.length / pageSize));
+    if(page < 1) page = 1; if(page > totalPages) page = totalPages;
+
+    // slice
+    const start = (page - 1) * pageSize;
+    const slice = rfqs.slice(start, start + pageSize);
+
+    // render cards
+    rfqList.innerHTML = '';
+    slice.forEach(r=>{
+      const card = document.createElement('div'); card.className='card rfq-card';
+      const seed = encodeURIComponent((r.title||'rfq').split(' ').slice(0,4).join('-'));
+      const img = `<img class="rfq-img" src="https://picsum.photos/seed/${seed}/600/400" alt="${esc(r.title)}">`;
+      card.innerHTML = `${img}<div style="font-weight:700">${esc(r.title)}</div><div class="small muted">${esc(r.desc||'')}</div><div class="small muted">${new Date(r.ts||Date.now()).toLocaleString()}</div><div style="margin-top:6px"><button class="btn respondBtn" data-id="${esc(r.id)}">Respond</button></div>`;
+      rfqList.appendChild(card);
+    });
+
+    // pagination controls
+    const pag = document.createElement('div'); pag.className='pagination-controls';
+    const prevBtn = document.createElement('button'); prevBtn.className='btn'; prevBtn.innerHTML='&laquo; Previous'; prevBtn.disabled = page === 1;
+    const nextBtn = document.createElement('button'); nextBtn.className='btn'; nextBtn.innerHTML='Next &raquo;'; nextBtn.disabled = page === totalPages;
+    const info = document.createElement('span'); info.className='small muted'; info.textContent = `Page ${page} of ${totalPages}`;
+
+    prevBtn.addEventListener('click', ()=> { renderPagedRFQs(page - 1, pageSize); });
+    nextBtn.addEventListener('click', ()=> { renderPagedRFQs(page + 1, pageSize); });
+
+    pag.appendChild(prevBtn); pag.appendChild(info); pag.appendChild(nextBtn);
+    rfqList.appendChild(pag);
+
+    // wire respond buttons
+    rfqList.querySelectorAll('.respondBtn').forEach(b=>{
+      b.addEventListener('click', ()=> {
+        const id = b.dataset.id;
+        // open RFQ modal prefilled
+        if($('rfqTitle')) $('rfqTitle').value = `Responding to: ${id}`;
+        if($('rfqDesc')) $('rfqDesc').value = `I can supply this RFQ (id: ${id}). Please share quantity and delivery details.`;
+        openModal('rfqModal');
+      });
+    });
+  }
+  // initial load
+  setTimeout(()=> renderPagedRFQs(1,6), 120);
+
+  /* --------------------------
+     4) Sidebar enhacements: make cat-item clickable immediately and keyboard accessible
+     -------------------------- */
+  function enhanceSidebar(){
+    const catList = $('categoryList');
+    if(!catList) return;
+    Array.from(catList.querySelectorAll('.cat-item')).forEach(item=>{
+      if(item.dataset.__enhanced) return;
+      item.dataset.__enhanced = '1';
+      // make pointer and tabindex
+      item.style.cursor = 'pointer';
+      item.setAttribute('tabindex','0');
+      // on click: set searchInput to subcategory and re-run filters immediately
+      item.addEventListener('click', ()=>{
+        const text = (item.textContent || '').replace(/^[•\-\s]+/,'').trim();
+        if($('searchInput')) $('searchInput').value = text;
+        // if a category select exists and we can infer parent category, set it
+        const parent = item.closest('.cat-block');
+        if(parent){
+          const heading = parent.querySelector(':scope > div, :scope > h4, :scope > div:nth-child(1)');
+          if(heading && $('categorySelect')) $('categorySelect').value = heading.textContent.trim();
+        }
+        // call available filter functions
+        if(typeof window.applyFiltersAndRender === 'function') window.applyFiltersAndRender();
+        else if(typeof window.runFilters === 'function') window.runFilters();
+        else if(document.getElementById('applyFilters')) document.getElementById('applyFilters').click();
+        else if(document.getElementById('searchBtn')) document.getElementById('searchBtn').click();
+      });
+      // keyboard: Enter triggers click
+      item.addEventListener('keydown', (e)=> { if(e.key === 'Enter') item.click(); });
+    });
+  }
+  // run enhancement now and also observe future changes
+  setTimeout(enhanceSidebar, 120);
+  const sidebar = $('categoryList');
+  if(sidebar){
+    const mo = new MutationObserver(()=> enhanceSidebar());
+    mo.observe(sidebar, { childList:true, subtree:true });
+  }
+
+  /* --------------------------
+     5) Make sure location detection updates language -> applyTranslations -> rerender
+     (This complements existing detectLocationAndCurrency code)
+     -------------------------- */
+  (function bindAutoLangOnLocation(){
+    // if detectLocation sets locText/countryFlag/currencySelect it should also set so_lang; we watch localStorage
+    window.addEventListener('storage', (ev)=>{
+      if(ev.key === 'so_lang' && ev.newValue){
+        applyI18nAndRerender(ev.newValue);
+      }
+      if(ev.key === 'so_currency' && ev.newValue){
+        // re-render prices immediately
+        if(typeof window.renderGrid === 'function') window.renderGrid(window.__SO_PRODUCTS || []);
+        if(typeof window.renderPagedProducts === 'function') window.renderPagedProducts(window.__SO_PRODUCTS || []);
+      }
+    });
+    // if ipapi code has already set language in localStorage, apply immediately
+    const lsLang = localStorage.getItem('so_lang');
+    if(lsLang) setTimeout(()=> applyI18nAndRerender(lsLang), 160);
+  })();
+
+  /* --------------------------
+     6) Expose utilities to window for debugging
+     -------------------------- */
+  window.SO_PATCH = window.SO_PATCH || {};
+  window.SO_PATCH.applyI18nAndRerender = applyI18nAndRerender;
+  window.SO_PATCH.renderPagedRFQs = renderPagedRFQs;
+  window.SO_PATCH.enhanceSidebar = enhanceSidebar;
+
+  console.info('SO-GROUP final patch applied: Alibaba product modal decorations, RFQ prev/next pagination, sidebar instant filters, i18n auto-apply.');
+})();
+</script>
+<!-- ===== end patch ===== -->
+
+</body>
+</html>
