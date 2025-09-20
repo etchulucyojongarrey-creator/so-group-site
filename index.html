@@ -3164,6 +3164,70 @@ document.addEventListener('DOMContentLoaded', function () {
     closeModal('postAdModal');
   });
 </script>
+<!-- ==== Login/Register Modal ==== -->
+<div id="loginModal" class="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;overflow:auto;">
+  <div class="modal-content" style="background:#fff;margin:40px auto;padding:20px;border-radius:8px;max-width:400px;position:relative;">
+    <button class="btn" style="position:absolute;right:10px;top:10px" onclick="closeModal('loginModal')">&times;</button>
+    <h2>Login / Register</h2>
+    <form id="emailLoginForm" style="margin-bottom:14px">
+      <input type="email" id="emailInput" placeholder="Email" required style="width:100%;margin-bottom:8px"><br>
+      <input type="password" id="passwordInput" placeholder="Password" required style="width:100%;margin-bottom:8px"><br>
+      <button type="submit" class="btn" style="width:100%">Login with Email</button>
+    </form>
+    <div style="margin:10px 0;text-align:center;font-size:13px;color:#555">OR</div>
+    <button class="btn" style="width:100%;background:#db4437" onclick="loginWithGoogle()">Login with Google</button><br><br>
+    <button class="btn" style="width:100%;background:#430297" onclick="loginWithYahoo()">Login with Yahoo</button>
+  </div>
+</div>
+
+<script>
+  // Email login
+  document.getElementById('emailLoginForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const email=document.getElementById('emailInput').value;
+    const pass=document.getElementById('passwordInput').value;
+    firebase.auth().signInWithEmailAndPassword(email,pass)
+    .then(()=>{ alert("Logged in with Email!"); closeModal('loginModal'); })
+    .catch(err=>{
+      if(err.code==="auth/user-not-found"){
+        // auto-register
+        firebase.auth().createUserWithEmailAndPassword(email,pass)
+        .then(()=>{ alert("Account created & logged in!"); closeModal('loginModal'); })
+        .catch(e2=>alert(e2.message));
+      } else {
+        alert(err.message);
+      }
+    });
+  });
+
+  // Google login
+  function loginWithGoogle(){
+    const provider=new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+      .then(()=>{ alert("Logged in with Google!"); closeModal('loginModal'); })
+      .catch(err=>alert(err.message));
+  }
+
+  // Yahoo login
+  function loginWithYahoo(){
+    const provider=new firebase.auth.OAuthProvider('yahoo.com');
+    firebase.auth().signInWithPopup(provider)
+      .then(()=>{ alert("Logged in with Yahoo!"); closeModal('loginModal'); })
+      .catch(err=>alert(err.message));
+  }
+
+  // Monitor auth state
+  firebase.auth().onAuthStateChanged(user=>{
+    if(user){
+      console.log("Logged in:",user.email||user.displayName);
+    } else {
+      console.log("Not logged in");
+    }
+  });
+
+  // Open login modal
+  function openLogin(){ openModal('loginModal'); }
+</script>
 
 </body>
 </html>
