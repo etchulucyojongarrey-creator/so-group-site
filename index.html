@@ -3094,6 +3094,76 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 <!-- ===== end patch ===== -->
+<!-- ==== Post Ad Modal ==== -->
+<div id="postAdModal" class="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;overflow:auto;">
+  <div class="modal-content" style="background:#fff;margin:40px auto;padding:20px;border-radius:8px;max-width:700px;position:relative;">
+    <button class="btn" style="position:absolute;right:10px;top:10px" onclick="closeModal('postAdModal')">&times;</button>
+    <h2>Post an Ad</h2>
+    <form id="postAdForm">
+      <label>Product Title</label><br>
+      <input type="text" name="title" required style="width:100%;margin-bottom:10px"><br>
+
+      <label>Category</label><br>
+      <select name="category" required style="width:100%;margin-bottom:10px">
+        <option value="">-- Select Category --</option>
+        <option>Electronics</option>
+        <option>Fashion</option>
+        <option>Home & Garden</option>
+        <option>Industrial</option>
+        <option>Automotive</option>
+        <option>Health & Beauty</option>
+        <option>Education</option>
+        <option>Books</option>
+      </select><br>
+
+      <label>Subcategory</label><br>
+      <input type="text" name="subcategory" placeholder="Enter subcategory" required style="width:100%;margin-bottom:10px"><br>
+
+      <label>Price</label><br>
+      <input type="number" name="price" required style="width:48%;margin-bottom:10px"> 
+      <select name="currency" style="width:48%;margin-bottom:10px">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="CFA">CFA</option>
+      </select><br>
+
+      <label>Description</label><br>
+      <textarea name="description" required style="width:100%;height:100px;margin-bottom:10px"></textarea><br>
+
+      <label>Upload Photos</label><br>
+      <input type="file" name="photos" multiple accept="image/*" style="margin-bottom:10px"><br>
+
+      <label>Contact Info</label><br>
+      <input type="text" name="contact" required placeholder="Phone / Email" style="width:100%;margin-bottom:10px"><br>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button type="button" class="btn" onclick="closeModal('postAdModal')">Cancel</button>
+        <button type="submit" class="btn">Submit Ad</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Open Post Ad form (check login)
+  function openPostAd(){
+    firebase.auth().onAuthStateChanged(user=>{
+      if(user){
+        openModal('postAdModal');
+      } else {
+        alert("Please log in or create an account before posting an ad.");
+        // Optionally: open login modal
+      }
+    });
+  }
+
+  // Handle Submit Ad
+  document.getElementById('postAdForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    alert("Ad submitted successfully (demo)!");
+    closeModal('postAdModal');
+  });
+</script>
 
 </body>
 </html>
