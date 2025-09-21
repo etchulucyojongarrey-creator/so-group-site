@@ -3228,6 +3228,70 @@ document.addEventListener('DOMContentLoaded', function () {
   // Open login modal
   function openLogin(){ openModal('loginModal'); }
 </script>
+<!-- 1) Load Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+<!-- 2) Initialize Firebase with your config -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyArTlI0hO7HyaUlz7DfiadIIZRS5Uk-hnI",
+    authDomain: "kmmp-8ea26.firebaseapp.com",
+    projectId: "kmmp-8ea26",
+    storageBucket: "kmmp-8ea26.firebasestorage.app",
+    messagingSenderId: "972806549937",
+    appId: "1:972806549937:web:7a52a355adbfdddcb64d90",
+    measurementId: "G-HQHG0EHP4J"
+  };
+
+  // This starts Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<!-- 3) Your login functions (must come AFTER init above) -->
+<script>
+  const auth = firebase.auth();
+
+  function loginWithEmail(email, password) {
+    auth.signInWithEmailAndPassword(email, password)
+      .then(user => {
+        alert("Logged in: " + user.user.email);
+      })
+      .catch(err => {
+        if (err.code === "auth/user-not-found") {
+          return auth.createUserWithEmailAndPassword(email, password);
+        } else {
+          throw err;
+        }
+      })
+      .then(newUser => {
+        if (newUser) alert("New account created: " + newUser.user.email);
+      })
+      .catch(err => alert(err.message));
+  }
+
+  function loginWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .then(result => alert("Logged in with Google: " + result.user.email))
+      .catch(err => alert(err.message));
+  }
+
+  function loginWithYahoo() {
+    const provider = new firebase.auth.OAuthProvider("yahoo.com");
+    auth.signInWithPopup(provider)
+      .then(result => alert("Logged in with Yahoo: " + result.user.email))
+      .catch(err => alert(err.message));
+  }
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      console.log("Signed in:", user.email);
+    } else {
+      console.log("No user signed in");
+    }
+  });
+</script>
 
 </body>
 </html>
