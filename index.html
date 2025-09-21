@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
+  <a href="#" onclick="openModal('loginModal')">Login</a>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>SO GROUP — B2B Marketplace (Complete)</title>
@@ -3292,6 +3293,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 </script>
+<!-- ==== Login Modal ==== -->
+<div id="loginModal" class="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;overflow:auto;">
+  <div class="modal-content" style="background:#fff;margin:40px auto;padding:20px;border-radius:8px;max-width:400px;position:relative;">
+    <button class="btn" style="position:absolute;right:10px;top:10px" onclick="closeModal('loginModal')">&times;</button>
+    <h2>Login / Register</h2>
+
+    <!-- Email/Password Login -->
+    <form id="emailLoginForm" style="margin-bottom:14px">
+      <input type="email" id="emailInput" placeholder="Email" required style="width:100%;margin-bottom:8px"><br>
+      <input type="password" id="passwordInput" placeholder="Password" required style="width:100%;margin-bottom:8px"><br>
+      <button type="submit" class="btn" style="width:100%">Login with Email</button>
+    </form>
+
+    <div style="margin:10px 0;text-align:center;font-size:13px;color:#555">OR</div>
+
+    <!-- Social Logins -->
+    <button class="btn" style="width:100%;background:#db4437" onclick="loginWithGoogle()">Login with Google</button><br><br>
+    <button class="btn" style="width:100%;background:#430297" onclick="loginWithYahoo()">Login with Yahoo</button>
+  </div>
+</div>
 
 </body>
 </html>
